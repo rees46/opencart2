@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<code>rees46</code>
+	<name>REES46</name>
+	<version>1.6.1</version>
+	<author>p0v1n0m</author>
+	<link>rees46.com</link>
+	<file path="catalog/controller/common/header.php">
+		<operation>
+			<search><![CDATA[
+$this->load->language('common/header');
+			]]></search>
+			<add position="before"><![CDATA[
+		if ($this->config->get('rees46_tracking_status')) {
+			$data['rees46_status'] = $this->config->get('rees46_tracking_status');
+			$data['rees46_shop_id'] = $this->config->get('rees46_shop_id');
+
+			if (isset($this->request->get['route'])) {
+				$data['rees46_route'] = $this->request->get['route'];
+
+				if ($this->request->get['route'] == 'product/product' && isset($this->request->get['product_id'])) {
+					$data['rees46_product_id'] = $this->request->get['product_id'];
+				}
+
+				if ($this->customer->isLogged()) {
+					$data['rees46_customer_id'] = $this->customer->getId();
+					$data['rees46_customer_email'] = $this->customer->getEmail();
+				} elseif (isset($this->session->data['guest']['email'])) {
+					$data['rees46_guest_email'] = $this->session->data['guest']['email'];
+				}
+			} else {
+				$data['rees46_route'] = 'common/home';
+			}
+		}
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/common/header.tpl">
+		<operation>
+			<search><![CDATA[
+</head>
+			]]></search>
+			<add position="before"><![CDATA[
+<?php if (isset($rees46_status)) { ?>
+<!-- REES46 start -->
+<script>
+(function(r){window.r46=window.r46||function(){(r46.q=r46.q||[]).push(arguments)};var s=document.getElementsByTagName(r)[0],rs=document.createElement(r);rs.async=1;rs.src='//cdn.rees46.com/v3.js';s.parentNode.insertBefore(rs,s);})('script');
+
+// Init everything
+r46('init', '<?php echo $rees46_shop_id; ?>');
+<?php if (isset($rees46_customer_id)) { ?>
+// Add customer info
+r46('profile', 'set', {id: <?php echo $rees46_customer_id; ?>, email: '<?php echo $rees46_customer_email; ?>', birthday: '', gender: '' });
+<?php } ?>
+<?php if (isset($rees46_guest_email)) { ?>
+// Add guest info
+r46('profile', 'set', {email: '<?php echo $rees46_guest_email; ?>'});
+<?php } ?>
+<?php if (isset($rees46_product_id)) { ?>
+// Tracking view product
+r46('track', 'view', '<?php echo $rees46_product_id; ?>');
+<?php } ?>
+$(document).ajaxSend(function(event, jqxhr, settings) {
+	if (settings.url == 'index.php?route=checkout/cart/add') {
+		// Tracking add to cart
+		settings.data.split('&').forEach(function(pair) {
+			var parts = pair.split('=');
+
+			if (parts[0] == 'product_id') {
+				r46('track', 'cart', parts[1]);
+			}
+		});
+	} else if (settings.url == 'index.php?route=checkout/cart/remove') {
+		// Tracking remove from cart
+		settings.data.split('&').forEach(function(pair) {
+			var parts = pair.split('=');
+
+			if (parts[0] == 'key') {
+				r46('track', 'remove_from_cart', parts[1]);
+			}
+		});
+	}
+});
+</script>
+<!-- REES46 end -->
+<?php } ?>
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/checkout/success.php">
+		<operation>
+			<search><![CDATA[
+$this->cart->clear();
+			]]></search>
+			<add position="before"><![CDATA[
+			if ($this->config->get('rees46_tracking_status')) {
+				$data['rees46_status'] = $this->config->get('rees46_tracking_status');
+
+				$this->load->model('account/order');
+
+				foreach ($this->model_account_order->getOrderProducts($this->session->data['order_id']) as $product) {
+					$rees46_checkout['products'][] = array(
+						'id' => $product['product_id'],
+						'price' => $product['price'],
+						'amount' => $product['quantity']
+					);
+				}
+
+				$order_info = $this->model_account_order->getOrder($this->session->data['order_id']);
+
+				$rees46_checkout['order'] = $this->session->data['order_id'];
+				$rees46_checkout['order_price'] = $order_info['total'];
+
+				$data['rees46_checkout'] = json_encode($rees46_checkout);
+			}
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/common/success.tpl">
+		<operation>
+			<search><![CDATA[
+<?php echo $header; ?>
+			]]></search>
+			<add position="after"><![CDATA[
+<?php if (isset($rees46_status)) { ?>
+<!-- REES46 start checkout -->
+<script>
+// Tracking checkout
+r46('track', 'purchase', <?php echo $rees46_checkout; ?>);
+</script>
+<!-- REES46 end checkout -->
+<?php } ?>
+			]]></add>
+		</operation>
+	</file>
+</modification>
