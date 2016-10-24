@@ -8,7 +8,7 @@
 
 ## 2. Установка модуля
 
-* [Скачайте файл](https://github.com/p0v1n0m/rees46_opencart_2/raw/master/rees46_opencart2.ocmod.zip).
+* [Скачайте файл](https://github.com/rees46/opencart2/raw/master/rees46_opencart2.ocmod.zip).
 * Перейдите в админке вашего магазина в "Установщик дополнений".
 * Загрузите файл "rees46_opencart2.ocmod.zip".
 * Если загрузка окончилась ошибкой, то [скачайте архив](https://www.opencart.com/index.php?route=extension/extension/download&extension_download_id=1198841) и загрузите через "Установщик дополнений" файл "localcopy.ocmod.xml", после чего повторите загрузка файла модуля "rees46_opencart2.ocmod.zip".
@@ -83,14 +83,14 @@
 
 ## Скриншоты
 
-![Back-end Demo](https://github.com/p0v1n0m/rees46_opencart_2/blob/master/screenshots/01.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/01.jpg)
 
-![Back-end Demo](https://github.com/p0v1n0m/rees46_opencart_2/blob/master/screenshots/02.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/02.jpg)
 
-![Back-end Demo](https://github.com/p0v1n0m/rees46_opencart_2/blob/master/screenshots/03.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/03.jpg)
 
-![Back-end Demo](https://github.com/p0v1n0m/rees46_opencart_2/blob/master/screenshots/04.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/04.jpg)
 
-![Back-end Demo](https://github.com/p0v1n0m/rees46_opencart_2/blob/master/screenshots/05.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/05.jpg)
 
-![Back-end Demo](https://github.com/p0v1n0m/rees46_opencart_2/blob/master/screenshots/06.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/06.jpg)
