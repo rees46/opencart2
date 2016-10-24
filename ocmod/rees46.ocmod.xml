@@ -2,7 +2,7 @@
 <modification>
 	<code>rees46</code>
 	<name>REES46</name>
-	<version>1.6.1</version>
+	<version>1.6.2</version>
 	<author>p0v1n0m</author>
 	<link>rees46.com</link>
 	<file path="catalog/controller/common/header.php">

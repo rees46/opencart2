@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.2
+* Fixed module limit
+
 ## 1.6.1
 * More compatibility with opencart 2.2
 * Update README
