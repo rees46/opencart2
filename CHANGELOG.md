@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.2
+* Compatibility with Simple checkout
+
 ## 1.7.1
 * Fixed loading the module template
 

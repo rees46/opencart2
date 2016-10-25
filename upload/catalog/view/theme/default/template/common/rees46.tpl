@@ -11,9 +11,15 @@ r46('profile', 'set', {email: '<?php echo $guest_email; ?>'});
 <?php if (isset($product_id)) { ?>
 r46('track', 'view', '<?php echo $product_id; ?>');
 <?php } ?>
-
+<?php if ($route == 'checkout/cart') { ?>
+$.getJSON('index.php?route=common/rees46/getCartProducts', function(cart){
+	r46('track', 'cart', cart);
+});
+<?php } ?>
 $(document).ajaxComplete(function(e, xhr, settings) {
-	if (settings.url == 'index.php?route=checkout/cart/add') {
+	var url = settings.url.split('&');
+
+	if (url[0] == 'index.php?route=checkout/cart/add') {
 		var product_id, quantity;
 
 		settings.data.split('&').forEach(function(pair) {
@@ -29,7 +35,7 @@ $(document).ajaxComplete(function(e, xhr, settings) {
 		});
 
 		r46('track', 'cart', {id: product_id, amount: quantity});
-	} else if (settings.url == 'index.php?route=checkout/cart/edit' || settings.url == 'index.php?route=checkout/cart/remove') {
+	} else if (url[0] == 'index.php?route=checkout/cart/edit' || url[0] == 'index.php?route=checkout/cart/remove' || url[0] == 'index.php?route=checkout/simplecheckout') {
 		$.getJSON('index.php?route=common/rees46/getCartProducts', function(cart){
 			r46('track', 'cart', cart);
 		});
