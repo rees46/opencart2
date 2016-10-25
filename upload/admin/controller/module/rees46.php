@@ -21,7 +21,7 @@ class ControllerModuleRees46 extends Controller {
 					if (!isset($module['module_id'])) {
 						$module_data = $this->request->post['module'][$key];
 
-						$module_data['module_id'] = $this->model_extension_module->addModule('rees46', $this->request->post['module'][$key]);
+						$module_data['module_id'] = $this->model_extension_module->addModule('rees46', $module_data);
 
 						$this->model_extension_module->editModule($module_data['module_id'], $module_data);
 					} else {
@@ -294,13 +294,13 @@ class ControllerModuleRees46 extends Controller {
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (version_compare(VERSION, '2.2', '>=')) {
+		if (version_compare(VERSION, '2.2', '<')) {
 			foreach ($data['languages'] as $key => $language) {
-				$data['languages'][$key]['image'] = 'language/' . $language['code'] . '/' . $language['code'] . '.png';
+				$data['languages'][$key]['image'] = 'view/image/flags/' . $language['image'];
 			}
 		} else {
 			foreach ($data['languages'] as $key => $language) {
-				$data['languages'][$key]['image'] = 'view/image/flags/' . $language['image'];
+				$data['languages'][$key]['image'] = 'language/' . $language['code'] . '/' . $language['code'] . '.png';
 			}
 		}
 
@@ -308,7 +308,12 @@ class ControllerModuleRees46 extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/rees46.tpl', $data));
+		if (version_compare(VERSION, '2.2', '<')) {
+			$this->response->setOutput($this->load->view('module/rees46.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('module/rees46', $data));
+		}
+
 	}
 
 	public function export() {
@@ -750,12 +755,12 @@ class ControllerModuleRees46 extends Controller {
 	public function install() {
 		$this->load->model('extension/event');
 
-		if (version_compare(VERSION, '2.2', '>=')) {
-			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrder/after', 'module/rees46/exportOrder');
-			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrderHistory/before', 'module/rees46/exportStatus');
-		} else {
+		if (version_compare(VERSION, '2.2', '<')) {
 			$this->model_extension_event->addEvent('rees46', 'post.order.add', 'module/rees46/exportOrder');
 			$this->model_extension_event->addEvent('rees46', 'pre.order.history.add', 'module/rees46/exportStatus');
+		} else {
+			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrder/after', 'module/rees46/exportOrder');
+			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrderHistory/before', 'module/rees46/exportStatus');
 		}
 	}
 

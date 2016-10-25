@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.0
+* Modification cart tracking
+* More compatibility
+* Fixed bug module_id
+
 ## 1.6.2
 * Fixed module limit
 

@@ -11,7 +11,7 @@
 * [Скачайте файл](https://github.com/rees46/opencart2/raw/master/rees46_opencart2.ocmod.zip).
 * Перейдите в админке вашего магазина в "Установщик дополнений".
 * Загрузите файл "rees46_opencart2.ocmod.zip".
-* Если загрузка окончилась ошибкой, то [скачайте архив](https://www.opencart.com/index.php?route=extension/extension/download&extension_download_id=1198841) и загрузите через "Установщик дополнений" файл "localcopy.ocmod.xml", после чего повторите загрузку файла модуля "rees46_opencart2.ocmod.zip".
+* Если загрузка окончилась ошибкой, то [скачайте архив](https://www.opencart.com/index.php?route=extension/extension/download&extension_download_id=1198841), загрузите через "Установщик дополнений" файл "localcopy.ocmod.xml", перейдите в "Менеджер дополнений" и обновите кэш, после чего повторите загрузку файла модуля "rees46_opencart2.ocmod.zip".
 * Перейдите в "Менеджер дополнений" и обновите кэш.
 
 ## 3. Настройка модуля

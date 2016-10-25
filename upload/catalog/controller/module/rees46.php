@@ -124,10 +124,14 @@ class ControllerModuleRees46 extends Controller {
 		}
 
 		if (isset($data['params'])) {
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/rees46.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/rees46.tpl', $data);
+			if (version_compare(VERSION, '2.2', '<')) {
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/rees46.tpl')) {
+					return $this->load->view($this->config->get('config_template') . '/template/module/rees46.tpl', $data);
+				} else {
+					return $this->load->view('default/template/module/rees46.tpl', $data);
+				}
 			} else {
-				return $this->load->view('default/template/module/rees46.tpl', $data);
+				return $this->load->view('module/rees46', $data);
 			}
 		}
 	}
@@ -181,22 +185,46 @@ class ControllerModuleRees46 extends Controller {
 							$image = $this->model_tool_image->resize('placeholder.png', $width, $height);
 						}
 
-						if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-							$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
-						} else {
-							$price = false;
-						}
+						if (version_compare(VERSION, '2.2', '<')) {
+							if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+								$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+							} else {
+								$price = false;
+							}
 
-						if ((float)$product_info['special']) {
-							$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
-						} else {
-							$special = false;
-						}
+							if ((float)$product_info['special']) {
+								$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+							} else {
+								$special = false;
+							}
 
-						if ($this->config->get('config_tax')) {
-							$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price']);
+							if ($this->config->get('config_tax')) {
+								$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price']);
+							} else {
+								$tax = false;
+							}
+
+							$description = utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..';
 						} else {
-							$tax = false;
+							if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+								$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+							} else {
+								$price = false;
+							}
+
+							if ((float)$product_info['special']) {
+								$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+							} else {
+								$special = false;
+							}
+
+							if ($this->config->get('config_tax')) {
+								$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
+							} else {
+								$tax = false;
+							}
+
+							$description = utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..';
 						}
 
 						if ($this->config->get('config_review_status')) {
@@ -209,7 +237,7 @@ class ControllerModuleRees46 extends Controller {
 							'product_id'  => $product_info['product_id'],
 							'thumb'       => $image,
 							'name'        => $product_info['name'],
-							'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+							'description' => $description,
 							'price'       => $price,
 							'special'     => $special,
 							'tax'         => $tax,
@@ -239,10 +267,14 @@ class ControllerModuleRees46 extends Controller {
 			}
 
 			if (!empty($data['products'])) {
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/' . $setting['template'] . '.tpl')) {
-					$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/module/' . $setting['template'] . '.tpl', $data));
+				if (version_compare(VERSION, '2.2', '<')) {
+					if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/' . $setting['template'] . '.tpl')) {
+						$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/module/' . $setting['template'] . '.tpl', $data));
+					} else {
+						$this->response->setOutput($this->load->view('default/template/module/' . $setting['template'] . '.tpl', $data));
+					}
 				} else {
-					$this->response->setOutput($this->load->view('default/template/module/' . $setting['template'] . '.tpl', $data));
+					return $this->load->view('module/' . $setting['template'], $data);
 				}
 			}
 		}
