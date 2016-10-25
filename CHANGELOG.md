@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.1
+* Fixed loading the module template
+
 ## 1.7.0
 * Modification cart tracking
 * More compatibility

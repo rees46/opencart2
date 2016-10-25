@@ -274,7 +274,7 @@ class ControllerModuleRees46 extends Controller {
 						$this->response->setOutput($this->load->view('default/template/module/' . $setting['template'] . '.tpl', $data));
 					}
 				} else {
-					return $this->load->view('module/' . $setting['template'], $data);
+					$this->response->setOutput($this->load->view('module/' . $setting['template'], $data));
 				}
 			}
 		}
