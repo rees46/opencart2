@@ -255,11 +255,11 @@ class ControllerModuleRees46 extends Controller {
 
 						if ($return['info']['http_code'] < 200 || $return['info']['http_code'] >= 300) {
 							if ($this->config->get('rees46_log')) {
-								$this->log->write('REES46 log: error exclude of recomended product_id = ' . $product_id . ' [' . $return['info']['http_code'] . ']');
+								$this->log->write('REES46 [error]: Error exclude of recomended product_id [' . $product_id . '] [' . $return['info']['http_code'] . ']');
 							}
 						} else {
 							if ($this->config->get('rees46_log')) {
-								$this->log->write('REES46 log: success exclude of recomended product_id = ' . $product_id);
+								$this->log->write('REES46 [success]: Excluded of recomended product_id [' . $product_id . ']');
 							}
 						}
 					}
@@ -328,11 +328,11 @@ class ControllerModuleRees46 extends Controller {
 
 					if ($return['info']['http_code'] < 200 || $return['info']['http_code'] >= 300) {
 						if ($this->config->get('rees46_log')) {
-							$this->log->write('REES46 log: error autoexport order_id = ' . $order_id . ' [' . $return['info']['http_code'] . ']');
+							$this->log->write('REES46 [error]: Error autoexport order_id [' . $order_id . '] [' . $return['info']['http_code'] . ']');
 						}
 					} else {
 						if ($this->config->get('rees46_log')) {
-							$this->log->write('REES46 log: success autoexport order_id = ' . $order_id);
+							$this->log->write('REES46 [success]: Autoexport order_id [' . $order_id . ']');
 						}
 					}
 				}
@@ -371,11 +371,11 @@ class ControllerModuleRees46 extends Controller {
 
 				if ($return['info']['http_code'] < 200 || $return['info']['http_code'] >= 300) {
 					if ($this->config->get('rees46_log')) {
-						$this->log->write('REES46 log: error autoexport status = ' . $order_status_id . ' of order_id = ' . $order_id . ' [' . $return['info']['http_code'] . ']');
+						$this->log->write('REES46 [error]: Error autoexport status [' . $order_status_id . '] of order_id [' . $order_id . '] [' . $return['info']['http_code'] . ']');
 					}
 				} else {
 					if ($this->config->get('rees46_log')) {
-						$this->log->write('REES46 log: success autoexport status = ' . $order_status_id . ' of order_id = ' . $order_id);
+						$this->log->write('REES46 [success]: Autoexport status [' . $order_status_id . '] of order_id [' . $order_id . ']');
 					}
 				}
 			}

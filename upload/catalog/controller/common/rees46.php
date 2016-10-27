@@ -2,7 +2,6 @@
 class ControllerCommonRees46 extends Controller {
 	public function index() {
 		if ($this->config->get('rees46_tracking_status')) {
-			$data['status'] = $this->config->get('rees46_tracking_status');
 			$data['shop_id'] = $this->config->get('rees46_shop_id');
 
 			if (isset($this->request->get['route'])) {
@@ -22,20 +21,20 @@ class ControllerCommonRees46 extends Controller {
 				$data['route'] = 'common/home';
 			}
 
-			$products = array();
+			$cart = array();
 
-			$cart_products = $this->cart->getProducts();
+			$products = $this->cart->getProducts();
 
-			if ($cart_products) {
-				foreach ($cart_products as $product) {
-					$products[] = array(
+			if ($products) {
+				foreach ($products as $product) {
+					$cart[] = array(
 						'id'     => $product['product_id'],
 						'amount' => $product['quantity']
 					);
 				}
 			}
 
-			$data['cart'] = json_encode($products);
+			$data['cart'] = json_encode($cart);
 
 			
 			if (version_compare(VERSION, '2.2', '<')) {

@@ -114,13 +114,13 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group">
+							<!--div class="form-group">
 								<label class="col-sm-2 control-label"><?php echo $entry_xml_generate; ?></label>
 								<div class="col-sm-10">
 									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_4; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
 									<button type="button" onclick="startGenerate();" class="btn btn-success" id="button-start-generate"><?php echo $button_generate; ?></button>
 								</div>
-							</div>
+							</div-->
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-xml_url"><?php echo $entry_xml_url; ?></label>
 								<div class="col-sm-10">

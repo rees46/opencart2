@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0
+* Removed manual XML generation mode
+* Added dynamic XML URL
+* More compatibility all versions
+* Small refactoring
+* Uniform style of log
+
 ## 1.7.2
 * Compatibility with Simple checkout
 
@@ -31,27 +38,27 @@
 * Fixed empty selection for export
 
 ## 1.4.4
-* Load config_currency if not there is xml currency
-* Fixed product urls in xml
-* Hide manufacturer xml tag if empty
+* Load config_currency if not there is XML currency
+* Fixed product urls in XML
+* Hide manufacturer XML tag if empty
 * More edit translation
 
 ## 1.4.3
 * Hide alert if not there is shop id and key
 
 ## 1.4.2
-* Removal xml if status disabled
+* Removal XML if status disabled
 * Edit translation
 
 ## 1.4.1
 * Correction admin translations
 
 ## 1.4.0
-* Fixed and decoded product urls in xml
+* Fixed and decoded product urls in XML
 * Fixed description according to the recommendations yml
 * Added translate for generation process
 * Fixed calculation of product prices and currency rate
-* Added setting currency for product prices in xml
+* Added setting currency for product prices in XML
 
 ## 1.3.3
 * Added products to generator
@@ -60,10 +67,10 @@
 * Added categories to generator
 
 ## 1.3.1
-* Translations and log for xml
+* Translations and log for XML
 
 ## 1.3.0
-* Added xml feed generator (alpha)
+* Added XML feed generator (alpha)
 
 ## 1.2.0
 * Added logging

@@ -1,4 +1,4 @@
-<?php if (isset($status)) { ?><!-- REES46 start -->
+<!-- REES46 start -->
 <script type="text/javascript"><!--
 (function(r){window.r46=window.r46||function(){(r46.q=r46.q||[]).push(arguments)};var s=document.getElementsByTagName(r)[0],rs=document.createElement(r);rs.async=1;rs.src='//cdn.rees46.com/v3.js';s.parentNode.insertBefore(rs,s);})('script');
 r46('init', '<?php echo $shop_id; ?>');
@@ -42,4 +42,4 @@ $(document).ajaxComplete(function(e, xhr, settings) {
 	}
 });
 --></script>
-<!-- REES46 end --><?php } ?>
+<!-- REES46 end -->

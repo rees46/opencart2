@@ -4,6 +4,12 @@ class ControllerModuleRees46 extends Controller {
 	private $xml_name = 'rees46.xml';
 
 	public function index() {
+		if (version_compare(VERSION, '2.2', '<')) {
+			$ssl = 'SSL';
+		} else {
+			$ssl = true;
+		}
+
 		$this->load->language('module/rees46');
 
 		$this->load->model('setting/setting');
@@ -44,7 +50,7 @@ class ControllerModuleRees46 extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], $ssl));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -125,33 +131,33 @@ class ControllerModuleRees46 extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], $ssl)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], $ssl)
 		);
 
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => strip_tags($this->language->get('heading_title')),
-				'href' => $this->url->link('module/rees46', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('module/rees46', 'token=' . $this->session->data['token'], $ssl)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => strip_tags($this->language->get('heading_title')),
-				'href' => $this->url->link('module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
+				'href' => $this->url->link('module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], $ssl)
 			);
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('module/rees46', 'token=' . $this->session->data['token'], 'SSL');
+			$data['action'] = $this->url->link('module/rees46', 'token=' . $this->session->data['token'], $ssl);
 		} else {
-			$data['action'] = $this->url->link('module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
+			$data['action'] = $this->url->link('module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], $ssl);
 		}
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], $ssl);
 
 		if (isset($this->request->post['rees46_shop_id'])) {
 			$data['rees46_shop_id'] = $this->request->post['rees46_shop_id'];
@@ -284,9 +290,9 @@ class ControllerModuleRees46 extends Controller {
 		}
 
 		if ($this->request->server['HTTPS']) {
-			$data['xml_url'] = HTTPS_CATALOG . 'system/storage/download/rees46.xml';
+			$data['xml_url'] = HTTPS_CATALOG . 'index.php?route=tool/rees46';
 		} else {
-			$data['xml_url'] = HTTP_CATALOG . 'system/storage/download/rees46.xml';
+			$data['xml_url'] = HTTP_CATALOG . 'index.php?route=tool/rees46';
 		}
 
 		$data['token'] = $this->session->data['token'];
@@ -313,7 +319,6 @@ class ControllerModuleRees46 extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('module/rees46', $data));
 		}
-
 	}
 
 	public function export() {
@@ -417,7 +422,7 @@ class ControllerModuleRees46 extends Controller {
 					$json['error'] = $this->language->get('text_error_export');
 
 					if ($this->config->get('rees46_log')) {
-						$this->log->write('REES46 log: error export ' . $this->request->post['type'] . ' [' . $return['info']['http_code'] . ']');
+						$this->log->write('REES46 [error]: Export ' . $this->request->post['type'] . ' [' . $return['info']['http_code'] . ']');
 					}
 				} else {
 					if ($results_total > $next * $limit) {
@@ -428,7 +433,7 @@ class ControllerModuleRees46 extends Controller {
 						$json['success'] = sprintf($this->language->get('text_success_' . $this->request->post['type']), $results_total);
 
 						if ($this->config->get('rees46_log')) {
-							$this->log->write('REES46 log: success export ' . $this->request->post['type'] . ' (' . $results_total . ')');
+							$this->log->write('REES46 [success]: Export ' . $this->request->post['type'] . ' [' . $results_total . ']');
 						}
 					}
 				}
@@ -441,24 +446,6 @@ class ControllerModuleRees46 extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	protected function curl($url, $params) {
-		$ch = curl_init();
-
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-
-		$data['result'] = curl_exec($ch);
-		$data['info'] = curl_getinfo($ch);
-
-		curl_close($ch);
-
-		return $data;
 	}
 
 	public function startCheck() {
@@ -489,13 +476,13 @@ class ControllerModuleRees46 extends Controller {
 
 					if ($info['http_code'] < 200 || $info['http_code'] >= 300) {
 						if ($this->config->get('rees46_log')) {
-							$this->log->write('REES46 log: error loading file ' . $file . ' [' . $info['http_code'] . ']');
+							$this->log->write('REES46 [error]: Not loading file ' . $file . ' [' . $info['http_code'] . ']');
 						}
 					} else {
 						file_put_contents($dir . $file, $result);
 
 						if ($this->config->get('rees46_log')) {
-							$this->log->write('REES46 log: success loading file ' . $file);
+							$this->log->write('REES46 [success]: Loading file ' . $file);
 						}
 					}
 				}
@@ -726,6 +713,24 @@ class ControllerModuleRees46 extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	protected function curl($url, $params) {
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+
+		$data['result'] = curl_exec($ch);
+		$data['info'] = curl_getinfo($ch);
+
+		curl_close($ch);
+
+		return $data;
+	}
+
 	protected function replacer($str) {
 		return trim(str_replace('&#039;', '&apos;', htmlspecialchars(htmlspecialchars_decode($str, ENT_QUOTES), ENT_QUOTES)));
 	}
@@ -733,11 +738,11 @@ class ControllerModuleRees46 extends Controller {
 	protected function recorder($xml, $mode) {
 		if (!$fp = fopen(DIR_DOWNLOAD . $this->xml_name, $mode)) {
 			if ($this->config->get('rees46_log')) {
-				$this->log->write('REES46 log: Could not open xml file [ERROR]');
+				$this->log->write('REES46 [error]: Could not open XML file');
 			}
 		} elseif (fwrite($fp, $xml) === false) {
 			if ($this->config->get('rees46_log')) {
-				$this->log->write('REES46 log: XML file not writable [ERROR]');
+				$this->log->write('REES46 [error]: XML file not writable');
 			}
 		}
 
