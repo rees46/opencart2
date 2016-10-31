@@ -6,7 +6,7 @@ $_['heading_title']               = '<img src="view/image/rees46.png" width="20"
 $_['tab_settings']                = 'Общее';
 $_['tab_xml']                     = 'Товары';
 $_['tab_orders']                  = 'Заказы';
-$_['tab_subscribers']             = 'Подписчики';
+$_['tab_subscribers']             = 'Покупатели';
 $_['tab_webpush']                 = 'Web Push';
 $_['tab_modules']                 = 'Рекомендации';
 $_['tab_help']                    = 'Помощь';

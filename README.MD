@@ -84,14 +84,16 @@
 
 ## Скриншоты
 
-![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/01.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/en-gb/01.jpg)
 
-![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/02.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/en-gb/02.jpg)
 
-![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/03.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/en-gb/03.jpg)
 
-![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/04.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/en-gb/04.jpg)
 
-![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/05.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/en-gb/05.jpg)
 
-![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/06.jpg)
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/en-gb/06.jpg)
+
+![Back-end Demo](https://github.com/rees46/opencart2/blob/master/screenshots/en-gb/07.jpg)
