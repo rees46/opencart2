@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.1
+* Update english documentation link
+
 ## 1.8.0
 * Removed manual XML generation mode
 * Added dynamic XML URL
