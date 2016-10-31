@@ -78,8 +78,7 @@
 
 ## Совместимость
 
-* OpenCart 2.1.x
-* OpenCart 2.2.x
+* OpenCart 2.3.x
 * Модуль Simple Checkout
 
 ## Скриншоты

@@ -27,16 +27,16 @@
 			<div class="panel-body">
 				<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
-						<li><a href="#tab-xml" data-toggle="tab"><?php echo $tab_xml; ?></a></li>
+						<li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+						<li><a href="#tab-products" data-toggle="tab"><?php echo $tab_products; ?></a></li>
 						<li><a href="#tab-orders" data-toggle="tab"><?php echo $tab_orders; ?></a></li>
-						<li><a href="#tab-subscribers" data-toggle="tab"><?php echo $tab_subscribers; ?></a></li>
+						<li><a href="#tab-customers" data-toggle="tab"><?php echo $tab_customers; ?></a></li>
 						<li><a href="#tab-webpush" data-toggle="tab"><?php echo $tab_webpush; ?></a></li>
 						<li><a href="#tab-modules" data-toggle="tab"><?php echo $tab_modules; ?></a></li>
 						<li><a href="#tab-help" data-toggle="tab"><?php echo $tab_help; ?></a></li>
 					</ul>
 					<div class="tab-content">
-						<div class="tab-pane active" id="tab-settings">
+						<div class="tab-pane active" id="tab-general">
 							<?php if ($rees46_shop_id == '' && $rees46_secret_key == '') { ?>
 							<div class="form-group">
 								<div class="col-sm-12">
@@ -85,7 +85,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="tab-xml">
+						<div class="tab-pane" id="tab-products">
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-xml_status"><?php echo $entry_xml_status; ?></label>
 								<div class="col-sm-10">
@@ -114,13 +114,6 @@
 									</select>
 								</div>
 							</div>
-							<!--div class="form-group">
-								<label class="col-sm-2 control-label"><?php echo $entry_xml_generate; ?></label>
-								<div class="col-sm-10">
-									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_4; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
-									<button type="button" onclick="startGenerate();" class="btn btn-success" id="button-start-generate"><?php echo $button_generate; ?></button>
-								</div>
-							</div-->
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-xml_url"><?php echo $entry_xml_url; ?></label>
 								<div class="col-sm-10">
@@ -197,12 +190,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="tab-subscribers">
+						<div class="tab-pane" id="tab-customers">
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-subscribers"><?php echo $entry_export_type; ?></label>
+								<label class="col-sm-2 control-label" for="input-customers"><?php echo $entry_export_type; ?></label>
 								<div class="col-sm-10">
-									<select name="setting[rees46_subscribers]" id="input-subscribers" class="form-control">
-										<?php if ($rees46_subscribers) { ?>
+									<select name="setting[rees46_customers]" id="input-customers" class="form-control">
+										<?php if ($rees46_customers) { ?>
 										<option value="0"><?php echo $text_subscribers; ?></option>
 										<option value="1" selected="selected"><?php echo $text_customers; ?></option>
 										<?php } else { ?>
@@ -213,10 +206,10 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label"><?php echo $entry_export_subscribers; ?></label>
+								<label class="col-sm-2 control-label"><?php echo $entry_export_customers; ?></label>
 								<div class="col-sm-10">
 									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_3; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
-									<button type="button" onclick="startExport('subscribers');" class="btn btn-success" id="button-start-subscribers"><?php echo $button_export; ?></button>
+									<button type="button" onclick="startExport('customers');" class="btn btn-success" id="button-start-customers"><?php echo $button_export; ?></button>
 								</div>
 							</div>
 						</div>
@@ -269,7 +262,7 @@
 												<div class="col-sm-10">
 													<?php foreach ($languages as $language) { ?>
 													<div class="input-group pull-left">
-													<span class="input-group-addon"><img src="<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> </span>
+													<span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /> </span>
 													<input type="text" name="module[<?php echo $module['module_id']; ?>][title][<?php echo $language['language_id']; ?>]" value="<?php echo $module['setting']['title'][$language['language_id']]; ?>" id="input-title<?php echo $module['module_id']; ?>" class="form-control" />
 													</div>
 													<?php } ?>
@@ -468,7 +461,7 @@ function addModule() {
 	html += '		<div class="col-sm-10">';
 	<?php foreach ($languages as $language) { ?>
 	html += '			<div class="input-group pull-left">';
-	html += '				<span class="input-group-addon"><img src="<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> </span>';
+	html += '				<span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /> </span>';
 	html += '				<input type="text" name="module[' + module_row + '][title][<?php echo $language['language_id']; ?>]" value="" id="input-title' + module_row + '" class="form-control" />';
 	html += '			</div>';
 	<?php } ?>
@@ -591,41 +584,9 @@ function addModule() {
 	});
 }
 
-function startGenerate(type = 'shop', next = 0) {
-	$.ajax({
-		url: 'index.php?route=module/rees46/generate' + type + '&token=' + getURLVar('token'),
-		type: 'post',
-		data: 'type=' + type + '&next=' + next,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-start-generate').button('loading');
-		},
-		success: function(json) {
-			$('.alert-danger, .alert-success').remove();
-
-			if (json['success']) {
-				$('#tab-xml').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['type'] && json['next']) {
-				startGenerate(json['type'], json['next']);
-			} else {
-				$('#button-start-generate').button('reset');
-			}
-
-			if (json['error']) {
-				$('#tab-xml').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-}
-
 function startExport(type, next = 1) {
 	$.ajax({
-		url: 'index.php?route=module/rees46/export&token=' + getURLVar('token'),
+		url: 'index.php?route=extension/module/rees46/export&token=' + getURLVar('token'),
 		type: 'post',
 		data: 'type=' + type + '&next=' + next,
 		dataType: 'json',
@@ -657,7 +618,7 @@ function startExport(type, next = 1) {
 
 function startCheck() {
 	$.ajax({
-		url: 'index.php?route=module/rees46/startCheck&token=' + getURLVar('token'),
+		url: 'index.php?route=extension/module/rees46/startCheck&token=' + getURLVar('token'),
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {

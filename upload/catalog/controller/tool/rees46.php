@@ -1,7 +1,7 @@
 <?php
 class ControllerToolRees46 extends Controller {
-	protected $xml = '';
-	protected $prev = 0;
+	private $xml = '';
+	private $prev = 0;
 
 	public function index() {
 		if ($this->config->get('rees46_xml_status')) {
@@ -69,15 +69,7 @@ class ControllerToolRees46 extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (version_compare(VERSION, '2.2', '<')) {
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-					$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-				} else {
-					$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-				}
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found', $data));
-			}
+			$this->response->setOutput($this->load->view('default/template/error/not_found', $data));
 		}
 	}
 
@@ -118,9 +110,9 @@ class ControllerToolRees46 extends Controller {
 	}
 
 	protected function generateCategories() {
-		$this->load->model('module/rees46');
+		$this->load->model('extension/module/rees46');
 
-		$categories = $this->model_module_rees46->getAllCategories();
+		$categories = $this->model_extension_module_rees46->getAllCategories();
 
 		if (!empty($categories)) {
 			$this->xml .= '    <categories>';
@@ -140,14 +132,14 @@ class ControllerToolRees46 extends Controller {
 	}
 
 	protected function generateOffers() {
-		$this->load->model('module/rees46');
+		$this->load->model('extension/module/rees46');
 		$this->load->model('tool/image');
 
 		if ($this->prev == 0) {
 			$this->xml .= '    <offers>' . "\n";
 		}
 
-		$product = $this->model_module_rees46->getProduct($this->prev);
+		$product = $this->model_extension_module_rees46->getProduct($this->prev);
 
 		if (!empty($product)) {
 			$this->prev = $product['product_id'];
@@ -169,7 +161,7 @@ class ControllerToolRees46 extends Controller {
 
 			$this->xml .= '        <currencyId>' . $this->config->get('rees46_xml_currency') . '</currencyId>' . "\n";
 
-			$categories = $this->model_module_rees46->getProductCategories($product['product_id']);
+			$categories = $this->model_extension_module_rees46->getProductCategories($product['product_id']);
 
 			if (!empty($categories)) {
 				foreach ($categories as $category) {

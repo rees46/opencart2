@@ -1,5 +1,5 @@
 <?php
-class ModelModuleRees46 extends Model {
+class ModelExtensionModuleRees46 extends Model {
 	public function getOrder($order_id) {
 		$query = $this->db->query("SELECT order_id, customer_id, email, order_status_id, date_added FROM `" . DB_PREFIX . "order`");
 

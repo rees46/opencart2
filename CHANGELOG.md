@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0
+* OpenCart 2.3 support
+
 ## 1.8.1
 * Update english documentation link
 

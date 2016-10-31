@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleRees46 extends Controller {
+class ControllerExtensionModuleRees46 extends Controller {
 	public function index($setting) {
 		$data['module_id'] = $setting['module_id'];
 		$data['type'] = $setting['type'];
@@ -124,21 +124,13 @@ class ControllerModuleRees46 extends Controller {
 		}
 
 		if (isset($data['params'])) {
-			if (version_compare(VERSION, '2.2', '<')) {
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/rees46.tpl')) {
-					return $this->load->view($this->config->get('config_template') . '/template/module/rees46.tpl', $data);
-				} else {
-					return $this->load->view('default/template/module/rees46.tpl', $data);
-				}
-			} else {
-				return $this->load->view('module/rees46', $data);
-			}
+			return $this->load->view('extension/module/rees46', $data);
 		}
 	}
 
 	public function getProducts() {
 		if (isset($this->request->get['module_id']) && isset($this->request->get['product_ids'])) {
-			$this->load->language('module/rees46');
+			$this->load->language('extension/module/rees46');
 
 			$this->load->model('extension/module');
 			$this->load->model('catalog/product');
@@ -185,46 +177,22 @@ class ControllerModuleRees46 extends Controller {
 							$image = $this->model_tool_image->resize('placeholder.png', $width, $height);
 						}
 
-						if (version_compare(VERSION, '2.2', '<')) {
-							if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-								$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
-							} else {
-								$price = false;
-							}
-
-							if ((float)$product_info['special']) {
-								$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
-							} else {
-								$special = false;
-							}
-
-							if ($this->config->get('config_tax')) {
-								$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price']);
-							} else {
-								$tax = false;
-							}
-
-							$description = utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..';
+						if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+							$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 						} else {
-							if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-								$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-							} else {
-								$price = false;
-							}
+							$price = false;
+						}
 
-							if ((float)$product_info['special']) {
-								$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-							} else {
-								$special = false;
-							}
+						if ((float)$product_info['special']) {
+							$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+						} else {
+							$special = false;
+						}
 
-							if ($this->config->get('config_tax')) {
-								$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
-							} else {
-								$tax = false;
-							}
-
-							$description = utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..';
+						if ($this->config->get('config_tax')) {
+							$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
+						} else {
+							$tax = false;
 						}
 
 						if ($this->config->get('config_review_status')) {
@@ -237,7 +205,7 @@ class ControllerModuleRees46 extends Controller {
 							'product_id'  => $product_info['product_id'],
 							'thumb'       => $image,
 							'name'        => $product_info['name'],
-							'description' => $description,
+							'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get($this->config->get('config_theme') . '_product_description_length')) . '..',
 							'price'       => $price,
 							'special'     => $special,
 							'tax'         => $tax,
@@ -267,38 +235,26 @@ class ControllerModuleRees46 extends Controller {
 			}
 
 			if (!empty($data['products'])) {
-				if (version_compare(VERSION, '2.2', '<')) {
-					if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/' . $setting['template'] . '.tpl')) {
-						$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/module/' . $setting['template'] . '.tpl', $data));
-					} else {
-						$this->response->setOutput($this->load->view('default/template/module/' . $setting['template'] . '.tpl', $data));
-					}
-				} else {
-					$this->response->setOutput($this->load->view('module/' . $setting['template'], $data));
-				}
+				$this->response->setOutput($this->load->view('extension/module/' . $setting['template'], $data));
 			}
 		}
 	}
 
-	public function exportOrder($route, $order_id = false) {
+	public function exportOrder($route, $order_id) {
 		if ($this->config->get('rees46_tracking_status')) {
-			if (version_compare(VERSION, '2.2', '<')) {
-				$order_id = $route;
-			}
+			$this->load->model('extension/module/rees46');
 
-			$this->load->model('module/rees46');
-
-			$result = $this->model_module_rees46->getOrder($order_id);
+			$result = $this->model_extension_module_rees46->getOrder($order_id);
 
 			if (($this->config->get('rees46_status_created') && in_array($result['order_status_id'], $this->config->get('rees46_status_created'))) || ($this->config->get('rees46_status_completed') && in_array($result['order_status_id'], $this->config->get('rees46_status_completed'))) || ($this->config->get('rees46_status_cancelled') && in_array($result['order_status_id'], $this->config->get('rees46_status_cancelled')))) {
 				$order_products = array();
 
-				$products = $this->model_module_rees46->getOrderProducts($order_id);
+				$products = $this->model_extension_module_rees46->getOrderProducts($order_id);
 
 				foreach ($products as $product) {
 					$categories = array();
 
-					$categories = $this->model_module_rees46->getProductCategories($product['product_id']);
+					$categories = $this->model_extension_module_rees46->getProductCategories($product['product_id']);
 
 					$order_products[] = array(
 						'id'           => $product['product_id'],
@@ -340,13 +296,8 @@ class ControllerModuleRees46 extends Controller {
 		}
 	}
 
-	public function exportStatus($route, $order_id = false, $order_status_id = false) {
+	public function exportStatus($route, $order_id, $order_status_id) {
 		if ($this->config->get('rees46_tracking_status')) {
-			if (version_compare(VERSION, '2.2', '<')) {
-				$order_id = $route['order_id'];
-				$order_status_id = $route['order_status_id'];
-			}
-
 			if ($this->config->get('rees46_status_created') && in_array($order_status_id, $this->config->get('rees46_status_created'))) {
 				$status = 0;
 			} elseif ($this->config->get('rees46_status_completed') && in_array($order_status_id, $this->config->get('rees46_status_completed'))) {

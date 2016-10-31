@@ -1,16 +1,11 @@
 <?php
-class ControllerModuleRees46 extends Controller {
+class ControllerExtensionModuleRees46 extends Controller {
 	private $error = array();
-	private $xml_name = 'rees46.xml';
 
 	public function index() {
-		if (version_compare(VERSION, '2.2', '<')) {
-			$ssl = 'SSL';
-		} else {
-			$ssl = true;
-		}
+		$this->load->language('extension/module/rees46');
 
-		$this->load->language('module/rees46');
+		$this->document->setTitle(strip_tags($this->language->get('heading_title')));
 
 		$this->load->model('setting/setting');
 		$this->load->model('extension/module');
@@ -18,8 +13,6 @@ class ControllerModuleRees46 extends Controller {
 		$this->load->model('localisation/language');
 		$this->load->model('localisation/order_status');
 		$this->load->model('localisation/currency');
-
-		$this->document->setTitle(strip_tags($this->language->get('heading_title')));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!empty($this->request->post['module'])) {
@@ -42,22 +35,18 @@ class ControllerModuleRees46 extends Controller {
 				}
 			}
 
-			if ($this->request->post['setting']['rees46_xml_status'] == 0 && is_file(DIR_DOWNLOAD . $this->xml_name)) {
-				unlink(DIR_DOWNLOAD . $this->xml_name);
-			}
-
 			$this->model_setting_setting->editSetting('rees46', $this->request->post['setting']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], $ssl));
+			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['tab_settings'] = $this->language->get('tab_settings');
-		$data['tab_xml'] = $this->language->get('tab_xml');
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_products'] = $this->language->get('tab_products');
 		$data['tab_orders'] = $this->language->get('tab_orders');
-		$data['tab_subscribers'] = $this->language->get('tab_subscribers');
+		$data['tab_customers'] = $this->language->get('tab_customers');
 		$data['tab_webpush'] = $this->language->get('tab_webpush');
 		$data['tab_modules'] = $this->language->get('tab_modules');
 		$data['tab_help'] = $this->language->get('tab_help');
@@ -93,7 +82,6 @@ class ControllerModuleRees46 extends Controller {
 		$data['text_info_1'] = $this->language->get('text_info_1');
 		$data['text_info_2'] = $this->language->get('text_info_2');
 		$data['text_info_3'] = $this->language->get('text_info_3');
-		$data['text_info_4'] = $this->language->get('text_info_4');
 		$data['entry_shop_id'] = $this->language->get('entry_shop_id');
 		$data['entry_secret_key'] = $this->language->get('entry_secret_key');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -102,12 +90,11 @@ class ControllerModuleRees46 extends Controller {
 		$data['entry_status_created'] = $this->language->get('entry_status_created');
 		$data['entry_status_completed'] = $this->language->get('entry_status_completed');
 		$data['entry_status_cancelled'] = $this->language->get('entry_status_cancelled');
-		$data['entry_export_subscribers'] = $this->language->get('entry_export_subscribers');
+		$data['entry_export_customers'] = $this->language->get('entry_export_customers');
 		$data['entry_export_type'] = $this->language->get('entry_export_type');
 		$data['entry_webpush_files'] = $this->language->get('entry_webpush_files');
 		$data['entry_xml_status'] = $this->language->get('entry_xml_status');
 		$data['entry_xml_currency'] = $this->language->get('entry_xml_currency');
-		$data['entry_xml_generate'] = $this->language->get('entry_xml_generate');
 		$data['entry_xml_url'] = $this->language->get('entry_xml_url');
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_title'] = $this->language->get('entry_title');
@@ -131,33 +118,33 @@ class ControllerModuleRees46 extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], $ssl)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], $ssl)
+			'text' => $this->language->get('text_extension'),
+			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
 		);
 
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => strip_tags($this->language->get('heading_title')),
-				'href' => $this->url->link('module/rees46', 'token=' . $this->session->data['token'], $ssl)
+				'href' => $this->url->link('extension/module/rees46', 'token=' . $this->session->data['token'], true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => strip_tags($this->language->get('heading_title')),
-				'href' => $this->url->link('module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], $ssl)
+				'href' => $this->url->link('extension/module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
 			);
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('module/rees46', 'token=' . $this->session->data['token'], $ssl);
+			$data['action'] = $this->url->link('extension/module/rees46', 'token=' . $this->session->data['token'], true);
 		} else {
-			$data['action'] = $this->url->link('module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], $ssl);
+			$data['action'] = $this->url->link('extension/module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
 		}
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], $ssl);
+		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
 		if (isset($this->request->post['rees46_shop_id'])) {
 			$data['rees46_shop_id'] = $this->request->post['rees46_shop_id'];
@@ -207,10 +194,10 @@ class ControllerModuleRees46 extends Controller {
 			$data['rees46_status_cancelled'] = array();
 		}
 
-		if (isset($this->request->post['rees46_subscribers'])) {
-			$data['rees46_subscribers'] = $this->request->post['rees46_subscribers'];
+		if (isset($this->request->post['rees46_customers'])) {
+			$data['rees46_customers'] = $this->request->post['rees46_customers'];
 		} else {
-			$data['rees46_subscribers'] = $this->config->get('rees46_subscribers');
+			$data['rees46_customers'] = $this->config->get('rees46_customers');
 		}
 
 		if (isset($this->request->post['rees46_xml_status'])) {
@@ -300,31 +287,17 @@ class ControllerModuleRees46 extends Controller {
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (version_compare(VERSION, '2.2', '<')) {
-			foreach ($data['languages'] as $key => $language) {
-				$data['languages'][$key]['image'] = 'view/image/flags/' . $language['image'];
-			}
-		} else {
-			foreach ($data['languages'] as $key => $language) {
-				$data['languages'][$key]['image'] = 'language/' . $language['code'] . '/' . $language['code'] . '.png';
-			}
-		}
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		if (version_compare(VERSION, '2.2', '<')) {
-			$this->response->setOutput($this->load->view('module/rees46.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('module/rees46', $data));
-		}
+		$this->response->setOutput($this->load->view('extension/module/rees46', $data));
 	}
 
 	public function export() {
-		$this->load->language('module/rees46');
+		$this->load->language('extension/module/rees46');
 
-		$this->load->model('module/rees46');
+		$this->load->model('extension/module/rees46');
 		$this->load->model('catalog/product');
 		$this->load->model('customer/customer');
 
@@ -344,9 +317,9 @@ class ControllerModuleRees46 extends Controller {
 			}
 
 			if ($this->request->post['type'] == 'orders') {
-				$results_total = $this->model_module_rees46->getTotalOrders();
+				$results_total = $this->model_extension_module_rees46->getTotalOrders();
 
-				$results = $this->model_module_rees46->getOrders($filter_data);
+				$results = $this->model_extension_module_rees46->getOrders($filter_data);
 
 				$data = array();
 
@@ -355,7 +328,7 @@ class ControllerModuleRees46 extends Controller {
 						if (($this->config->get('rees46_status_created') && in_array($result['order_status_id'], $this->config->get('rees46_status_created'))) || ($this->config->get('rees46_status_completed') && in_array($result['order_status_id'], $this->config->get('rees46_status_completed'))) || ($this->config->get('rees46_status_cancelled') && in_array($result['order_status_id'], $this->config->get('rees46_status_cancelled')))) {
 							$order_products = array();
 
-							$products = $this->model_module_rees46->getOrderProducts($result['order_id']);
+							$products = $this->model_extension_module_rees46->getOrderProducts($result['order_id']);
 
 							foreach ($products as $product) {
 								$categories = array();
@@ -381,8 +354,8 @@ class ControllerModuleRees46 extends Controller {
 						}
 					}
 				}
-			} elseif ($this->request->post['type'] == 'subscribers') {
-				if (!$this->config->get('rees46_subscribers')) {
+			} elseif ($this->request->post['type'] == 'customers') {
+				if (!$this->config->get('rees46_customers')) {
 					$filter_data['filter_newsletter'] = 1;
 				}
 
@@ -410,13 +383,25 @@ class ControllerModuleRees46 extends Controller {
 					$params['orders'] = $data;
 
 					$url = 'http://api.rees46.com/import/orders';
-				} elseif ($this->request->post['type'] == 'subscribers') {
+				} elseif ($this->request->post['type'] == 'customers') {
 					$params['audience'] = $data;
 
 					$url = 'http://api.rees46.com/import/audience';
 				}
 
-				$return = $this->curl($url, json_encode($params, true));
+				$ch = curl_init();
+
+				curl_setopt($ch, CURLOPT_HEADER, false);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params, true));
+
+				$return['result'] = curl_exec($ch);
+				$return['info'] = curl_getinfo($ch);
+
+				curl_close($ch);
 
 				if ($return['info']['http_code'] < 200 || $return['info']['http_code'] >= 300) {
 					$json['error'] = $this->language->get('text_error_export');
@@ -449,7 +434,7 @@ class ControllerModuleRees46 extends Controller {
 	}
 
 	public function startCheck() {
-		$this->load->language('module/rees46');
+		$this->load->language('extension/module/rees46');
 
 		$json = array();
 
@@ -501,256 +486,8 @@ class ControllerModuleRees46 extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function generateShop() {
-		$this->load->language('module/rees46');
-
-		$json = array();
-
-		if ($this->validate() && isset($this->request->post['type']) && isset($this->request->post['next']) && $this->config->get('rees46_xml_status')) {
-			if ($this->request->server['HTTPS']) {
-				$url = HTTPS_CATALOG;
-			} else {
-				$url = HTTP_CATALOG;
-			}
-
-			$xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-			$xml .= '<!DOCTYPE yml_catalog SYSTEM "shops.dtd">' . "\n";
-			$xml .= '<yml_catalog date="' . date('Y-m-d H:i') . '">' . "\n";
-			$xml .= '  <shop>' . "\n";
-			$xml .= '    <name>' . $this->config->get('config_name') . '</name>' . "\n";
-			$xml .= '    <company>' . $this->config->get('config_owner') . '</company>' . "\n";
-			$xml .= '    <url>' . $url . '</url>' . "\n";
-			$xml .= '    <platform>OpenCart</platform>' . "\n";
-			$xml .= '    <version>' . VERSION . '</version>' . "\n";
-
-			$this->recorder($xml, 'w');
-
-			if (is_file(DIR_DOWNLOAD . $this->xml_name)) {
-				$json['success'] = $this->language->get('text_success_' . $this->request->post['type']);
-				$json['type'] = 'currencies';
-				$json['next'] = '0';
-			} else {
-				$json['error'] = $this->language->get('text_error_' . $this->request->post['type']);
-			}
-		} else {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function generateCurrencies() {
-		$this->load->language('module/rees46');
-
-		$this->load->model('localisation/currency');
-
-		$json = array();
-
-		if ($this->validate() && isset($this->request->post['type']) && isset($this->request->post['next'])) {
-			$allowed_currencies = array('RUR', 'RUB', 'UAH', 'BYN', 'KZT', 'USD', 'EUR');
-			$main_currencies = array('RUR', 'RUB', 'UAH', 'BYN', 'KZT');
-
-			//if (in_array($this->config->get('config_currency'), $main_currencies)) {
-				$xml = '    <currencies>';
-				$xml .= "\n" . '      <currency id="' . $this->config->get('config_currency') . '" rate="1"/>';
-
-				foreach ($this->model_localisation_currency->getCurrencies() as $currency) {
-					if ($currency['code'] != $this->config->get('config_currency') && $currency['status'] == 1 && in_array($currency['code'], $allowed_currencies)) {
-						$xml .= "\n" . '      <currency id="' . $currency['code'] . '" rate="' . number_format(1 / $currency['value'], 4, '.', '') . '"/>';
-					}
-				}
-
-				$xml .= "\n" . '    </currencies>' . "\n";
-
-				$this->recorder($xml, 'a');
-
-				if (is_file(DIR_DOWNLOAD . $this->xml_name)) {
-					$json['success'] = $this->language->get('text_success_' . $this->request->post['type']);
-					$json['type'] = 'categories';
-					$json['next'] = '0';
-				} else {
-					$json['error'] = $this->language->get('text_error_' . $this->request->post['type']);
-				}
-			//} else {
-			//	$json['error'] = $this->language->get('text_error_currency_code');
-			//}
-		} else {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function generateCategories() {
-		$this->load->language('module/rees46');
-
-		$this->load->model('module/rees46');
-
-		$json = array();
-
-		if ($this->validate() && isset($this->request->post['type']) && isset($this->request->post['next'])) {
-			$categories = $this->model_module_rees46->getAllCategories();
-
-			if (!empty($categories)) {
-				$xml = '    <categories>';
-
-				foreach ($categories as $category) {
-					if ($category['parent_id']) {
-						$parent = ' parentId="' . $category['parent_id'] . '"';
-					} else {
-						$parent = '';
-					}
-
-					$xml .= "\n" . '      <category id="' . $category['category_id'] . '"' . $parent . '>' . $this->replacer($category['name']) . '</category>';
-				}
-
-				$xml .= "\n" . '    </categories>' . "\n";
-
-				$this->recorder($xml, 'a');
-
-				if (is_file(DIR_DOWNLOAD . $this->xml_name)) {
-					$json['success'] = $this->language->get('text_success_' . $this->request->post['type']);
-					$json['type'] = 'offers';
-					$json['next'] = '0';
-				} else {
-					$json['error'] = $this->language->get('text_error_' . $this->request->post['type']);
-				}
-			} else {
-				$json['success'] = $this->language->get('text_success_' . $this->request->post['type']);
-			}
-		} else {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function generateOffers() {
-		$this->load->language('module/rees46');
-
-		$this->load->model('module/rees46');
-		$this->load->model('tool/image');
-		$this->load->model('catalog/product');
-
-		$json = array();
-
-		if ($this->validate() && isset($this->request->post['type']) && isset($this->request->post['next'])) {
-			if ($this->request->post['next'] == 0) {
-				$xml = '    <offers>' . "\n";
-			} else {
-				$xml = '';
-			}
-
-			$product = $this->model_module_rees46->getProduct($this->request->post['next']);
-
-			if (!empty($product)) {
-				$json['type'] = 'offers';
-				$json['next'] = $product['product_id'];
-
-				$xml .= '      <offer id="' . $product['product_id'] . '" available="' . ($product['quantity'] > 0 ? 'true' : 'false') . '">' . "\n";
-
-				if ($this->request->server['HTTPS']) {
-					$xml .= '        <url>' . $this->replacer(HTTPS_CATALOG . 'index.php?route=product/product&product_id=' . $product['product_id']) . '</url>' . "\n";
-				} else {
-					$xml .= '        <url>' . $this->replacer(HTTP_CATALOG . 'index.php?route=product/product&product_id=' . $product['product_id']) . '</url>' . "\n";
-				}
-
-				if ($product['special'] && $product['price'] > $product['special']) {
-					$xml .= '        <price>' . number_format($this->currency->convert($product['special'], $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
-					$xml .= '        <oldprice>' . number_format($this->currency->convert($product['price'], $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</oldprice>' . "\n";
-				} else {
-					$xml .= '        <price>' . number_format($this->currency->convert($product['price'], $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
-				}
-
-				$xml .= '        <currencyId>' . $this->config->get('rees46_xml_currency') . '</currencyId>' . "\n";
-
-				$categories = $this->model_catalog_product->getProductCategories($product['product_id']);
-
-				if (!empty($categories)) {
-					foreach ($categories as $category) {
-						$xml .= '        <categoryId>' . $category . '</categoryId>' . "\n";
-					}
-				}
-
-				if ($product['image']) {
-					$xml .= '        <picture>' . $this->model_tool_image->resize($product['image'], 600, 600) . '</picture>' . "\n";
-				}
-
-				$xml .= '        <name>' . $this->replacer($product['name']) . '</name>' . "\n";
-
-				if ($product['manufacturer']) {
-					$xml .= '        <vendor>' . $this->replacer($product['manufacturer']) . '</vendor>' . "\n";
-				}
-
-				$xml .= '        <model>' . $this->replacer($product['model']) . '</model>' . "\n";
-				$xml .= '        <description><![CDATA[' . strip_tags(htmlspecialchars_decode($product['description']), '<h3>, <ul>, <li>, <p>, <br>') . ']]></description>' . "\n";
-				$xml .= '      </offer>' . "\n";
-			} else {
-				$xml .= '    </offers>' . "\n";
-				$xml .= '  </shop>' . "\n";
-				$xml .= '</yml_catalog>';
-			}
-
-			$this->recorder($xml, 'a');
-
-			if (is_file(DIR_DOWNLOAD . $this->xml_name)) {
-				if (!empty($product)) {
-					$json['success'] = sprintf($this->language->get('text_success_' . $this->request->post['type']), $product['product_id']);
-				} else {
-					$json['success'] = $this->language->get('text_success_xml');
-				}
-			} else {
-				$json['error'] = sprintf($this->language->get('text_error_' . $this->request->post['type']), $product['product_id']);
-			}
-		} else {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	protected function curl($url, $params) {
-		$ch = curl_init();
-
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-
-		$data['result'] = curl_exec($ch);
-		$data['info'] = curl_getinfo($ch);
-
-		curl_close($ch);
-
-		return $data;
-	}
-
-	protected function replacer($str) {
-		return trim(str_replace('&#039;', '&apos;', htmlspecialchars(htmlspecialchars_decode($str, ENT_QUOTES), ENT_QUOTES)));
-	}
-
-	protected function recorder($xml, $mode) {
-		if (!$fp = fopen(DIR_DOWNLOAD . $this->xml_name, $mode)) {
-			if ($this->config->get('rees46_log')) {
-				$this->log->write('REES46 [error]: Could not open XML file');
-			}
-		} elseif (fwrite($fp, $xml) === false) {
-			if ($this->config->get('rees46_log')) {
-				$this->log->write('REES46 [error]: XML file not writable');
-			}
-		}
-
-		fclose($fp);
-	}
-
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/rees46')) {
+		if (!$this->user->hasPermission('modify', 'extension/module/rees46')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -760,13 +497,8 @@ class ControllerModuleRees46 extends Controller {
 	public function install() {
 		$this->load->model('extension/event');
 
-		if (version_compare(VERSION, '2.2', '<')) {
-			$this->model_extension_event->addEvent('rees46', 'post.order.add', 'module/rees46/exportOrder');
-			$this->model_extension_event->addEvent('rees46', 'pre.order.history.add', 'module/rees46/exportStatus');
-		} else {
-			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrder/after', 'module/rees46/exportOrder');
-			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrderHistory/before', 'module/rees46/exportStatus');
-		}
+		$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrder/after', 'extension/module/rees46/exportOrder');
+		$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/module/rees46/exportStatus');
 	}
 
 	public function uninstall() {

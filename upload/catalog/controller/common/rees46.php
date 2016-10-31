@@ -36,16 +36,7 @@ class ControllerCommonRees46 extends Controller {
 
 			$data['cart'] = json_encode($cart);
 
-			
-			if (version_compare(VERSION, '2.2', '<')) {
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/rees46.tpl')) {
-					return $this->load->view($this->config->get('config_template') . '/template/common/rees46.tpl', $data);
-				} else {
-					return $this->load->view('default/template/common/rees46.tpl', $data);
-				}
-			} else {
-				return $this->load->view('common/rees46', $data);
-			}
+			return $this->load->view('common/rees46', $data);
 		}
 	}
 
