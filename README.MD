@@ -1,5 +1,16 @@
 # Модуль REES46 для CMS OpenCart 2
 
+## Документация
+
+English documentation: [http://docs.rees46.com/display/en/OpenCart+2+Module](http://docs.rees46.com/display/en/OpenCart+2+Module)
+
+Русская документация: [http://docs.rees46.com/pages/viewpage.action?pageId=1835122](http://docs.rees46.com/pages/viewpage.action?pageId=1835122)
+
+## Совместимость
+
+* OpenCart 2.3.x (для OpenCart 2.1.x и OpenCart 2.2.x используйте модуль https://github.com/rees46/opencart2/tree/master)
+* Модуль Simple Checkout
+
 ## 1. Создание магазина
 
 * Зарегистрируйтесь на сайте http://rees46.com.
@@ -76,14 +87,3 @@
 Корзина | Внизу страницы | "Посмотрите также"
 Корзина | Внизу страницы | "Вам это будет интересно"
 Поиск | Внизу страницы | "Искавшие это также покупают"
-
-## Совместимость
-
-OpenCart 2.3.x (для OpenCart 2.1.x - 2.2.x используйте модуль https://github.com/rees46/opencart2/tree/master)
-Модуль Simple Checkout
-
-
-
-English documentation: [http://docs.rees46.com/display/en/OpenCart+2+Module](http://docs.rees46.com/display/en/OpenCart+2+Module)
-
-Русская документация: [http://docs.rees46.com/pages/viewpage.action?pageId=1835122](http://docs.rees46.com/pages/viewpage.action?pageId=1835122)
