@@ -77,8 +77,13 @@
 Корзина | Внизу страницы | "Вам это будет интересно"
 Поиск | Внизу страницы | "Искавшие это также покупают"
 
+## Совместимость
+
+OpenCart 2.3.x (для OpenCart 2.1.x - 2.2.x используйте модуль https://github.com/rees46/opencart2/tree/master)
+Модуль Simple Checkout
 
 
-English documentation: [http://docs.rees46.com/display/en/OpenCart2+Module](http://docs.rees46.com/display/en/OpenCart2+Module)
+
+English documentation: [http://docs.rees46.com/display/en/OpenCart+2+Module](http://docs.rees46.com/display/en/OpenCart+2+Module)
 
 Русская документация: [http://docs.rees46.com/pages/viewpage.action?pageId=1835122](http://docs.rees46.com/pages/viewpage.action?pageId=1835122)

@@ -29,7 +29,7 @@ $_['text_error_check']            = 'Ошибка: Вам необходимо �
 $_['text_edit']                   = 'Настройки модуля';
 $_['text_tab_module']             = 'Модуль';
 $_['text_documentation']          = 'Документация';
-$_['text_documentation_url']      = 'http://docs.rees46.com/display/R46D/OpenCart+2';
+$_['text_documentation_url']      = 'http://docs.rees46.com/pages/viewpage.action?pageId=1835122';
 $_['text_type_interesting']       = 'Возможно, вам это понравится';
 $_['text_type_also_bought']       = 'С этим товаром покупают';
 $_['text_type_similar']           = 'Похожие товары';
