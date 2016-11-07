@@ -87,3 +87,5 @@ English documentation: [http://docs.rees46.com/display/en/OpenCart+2+Module](htt
 Корзина | Внизу страницы | "Посмотрите также"
 Корзина | Внизу страницы | "Вам это будет интересно"
 Поиск | Внизу страницы | "Искавшие это также покупают"
+
+![opencart](http://api.rees46.com/marker/opencart)
