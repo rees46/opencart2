@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+* New XML generator
+* Update translation
+
 ## 2.0.0
 * OpenCart 2.3 support
 

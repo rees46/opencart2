@@ -37,7 +37,7 @@
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
-							<?php if ($rees46_shop_id == '' && $rees46_secret_key == '') { ?>
+							<?php if ($rees46_store_key == '' || $rees46_secret_key == '') { ?>
 							<div class="form-group">
 								<div class="col-sm-12">
 									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_1; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
@@ -45,9 +45,9 @@
 							</div>
 							<?php } ?>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-shop_id"><?php echo $entry_shop_id; ?></label>
+								<label class="col-sm-2 control-label" for="input-store_key"><?php echo $entry_store_key; ?></label>
 								<div class="col-sm-10">
-									<input type="text" name="setting[rees46_shop_id]" value="<?php echo $rees46_shop_id; ?>" id="input-shop_id" class="form-control" />
+									<input type="text" name="setting[rees46_store_key]" value="<?php echo $rees46_store_key; ?>" id="input-store_key" class="form-control" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -86,20 +86,7 @@
 							</div>
 						</div>
 						<div class="tab-pane" id="tab-products">
-							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-xml_status"><?php echo $entry_xml_status; ?></label>
-								<div class="col-sm-10">
-									<select name="setting[rees46_xml_status]" id="input-xml_status" class="form-control">
-										<?php if ($rees46_xml_status) { ?>
-										<option value="0"><?php echo $text_disabled; ?></option>
-										<option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-										<?php } else { ?>
-										<option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-										<option value="1"><?php echo $text_enabled; ?></option>
-										<?php } ?>
-									</select>
-								</div>
-							</div>
+							<input type="hidden" name="setting[rees46_xml_exported]" value="<?php echo $rees46_xml_exported; ?>" />
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-xml_currency"><?php echo $entry_xml_currency; ?></label>
 								<div class="col-sm-10">
@@ -115,9 +102,9 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-xml_url"><?php echo $entry_xml_url; ?></label>
+								<label class="col-sm-2 control-label" for="input-xml_cron"><?php echo $entry_xml_cron; ?></label>
 								<div class="col-sm-10">
-									<input type="text" value="<?php echo $xml_url; ?>" id="input-xml_url" class="form-control" readonly />
+									<input type="text" value="<?php echo $cron; ?>" id="input-xml_cron" class="form-control" readonly />
 								</div>
 							</div>
 						</div>
@@ -196,11 +183,11 @@
 								<div class="col-sm-10">
 									<select name="setting[rees46_customers]" id="input-customers" class="form-control">
 										<?php if ($rees46_customers) { ?>
-										<option value="0"><?php echo $text_subscribers; ?></option>
 										<option value="1" selected="selected"><?php echo $text_customers; ?></option>
+										<option value="0"><?php echo $text_subscribers; ?></option>
 										<?php } else { ?>
-										<option value="0" selected="selected"><?php echo $text_subscribers; ?></option>
 										<option value="1"><?php echo $text_customers; ?></option>
+										<option value="0" selected="selected"><?php echo $text_subscribers; ?></option>
 										<?php } ?>
 									</select>
 								</div>
@@ -217,6 +204,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label"><?php echo $entry_webpush_files; ?></label>
 								<div class="col-sm-10">
+									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_4; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
 									<button type="button" onclick="startCheck();" class="btn btn-success" id="button-start-check"><?php echo $button_check; ?></button>
 								</div>
 							</div>
@@ -358,7 +346,7 @@
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label" for="input-status<?php echo $module['module_id']; ?>"><?php echo $entry_status; ?></label>
+												<label class="col-sm-2 control-label" for="input-status<?php echo $module['module_id']; ?>"><?php echo $entry_block_status; ?></label>
 												<div class="col-sm-10">
 													<select name="module[<?php echo $module['module_id']; ?>][status]" id="input-status<?php echo $module['module_id']; ?>" class="form-control">
 														<?php if ($module['setting']['status'] == 1) { ?>
@@ -531,7 +519,7 @@ function addModule() {
 	html += '		</div>';
 	html += '	</div>';
 	html += '	<div class="form-group">';
-	html += '		<label class="col-sm-2 control-label" for="input-status' + module_row + '"><?php echo $entry_status; ?></label>';
+	html += '		<label class="col-sm-2 control-label" for="input-status' + module_row + '"><?php echo $entry_block_status; ?></label>';
 	html += '		<div class="col-sm-10">';
 	html += '			<select name="module[' + module_row + '][status]" id="input-status' + module_row + '" class="form-control">';
 	html += '				<option value="0"><?php echo $text_disabled; ?></option>';

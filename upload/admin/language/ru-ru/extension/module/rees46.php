@@ -7,7 +7,7 @@ $_['tab_general']                 = 'Общее';
 $_['tab_products']                = 'Товары';
 $_['tab_orders']                  = 'Заказы';
 $_['tab_customers']               = 'Покупатели';
-$_['tab_webpush']                 = 'Web Push';
+$_['tab_webpush']                 = 'Веб-пуш';
 $_['tab_modules']                 = 'Рекомендации';
 $_['tab_help']                    = 'Помощь';
 
@@ -47,28 +47,28 @@ $_['text_template_special']       = 'Акции';
 $_['text_autocomplete']           = 'Автодополнение';
 $_['text_subscribers']            = 'Подписчики на новости';
 $_['text_customers']              = 'Все покупатели';
-$_['text_info_1']                 = '<a href="https://rees46.com/customers/sign_up?locale=ru" target="_blank">Для использования модуля необходимо зарегистрироваться на rees46.com!</a>';
-$_['text_info_2']                 = 'Экспортируйте только один раз при первой настройке модуля. Будут экспортированы заказы за последние пол года с выбранными выше статусами. Пожалуйста, сохраните настройки перед экспортом!';
-$_['text_info_3']                 = 'Пожалуйста, сохраните настройки перед экспортом!';
+$_['text_info_1']                 = '<a href="https://rees46.com/customers/sign_up?locale=ru" target="_blank">Для использования модуля необходимо зарегистрироваться на сайте rees46.com.</a>';
+$_['text_info_2']                 = 'Экспортируйте только один раз при первой настройке модуля. Будут экспортированы заказы за последние пол года с выбранными выше статусами. Пожалуйста, сохраните настройки перед экспортом.';
+$_['text_info_3']                 = 'Пожалуйста, сохраните настройки перед экспортом.';
+$_['text_info_4']                 = 'Для активации веб-пуш уведомлений необходимо: cделать так, чтобы сайт поддерживал протокол HTTPS, загрузить в корень сайта файлы manifest.json и push_sw.js.';
 
 // Entry
-$_['entry_shop_id']               = 'Shop id';
-$_['entry_secret_key']            = 'Secret key';
-$_['entry_status']                = 'Статус';
+$_['entry_store_key']             = 'Store Key';
+$_['entry_secret_key']            = 'Secret Key';
+$_['entry_status']                = 'Статус модуля';
 $_['entry_log']                   = 'Логирование';
 $_['entry_export_orders']         = 'Экспорт заказов';
 $_['entry_status_created']        = 'Статус нового заказа';
 $_['entry_status_completed']      = 'Статус завершенного заказа';
 $_['entry_status_cancelled']      = 'Статус отмененного заказа';
 $_['entry_export_customers']      = 'Экспорт покупателей';
-$_['entry_export_type']           = 'Тип экспорта';
+$_['entry_export_type']           = 'Тип покупателей';
 $_['entry_webpush_files']         = 'Необходимые файлы';
-$_['entry_xml_status']            = 'Статус XML файла';
-$_['entry_xml_currency']          = 'Валюта товаров в XML файле';
-$_['entry_xml_url']               = 'Адрес XML файла';
-$_['entry_name']                  = 'Название модуля';
-$_['entry_title']                 = 'Заголовок';
-$_['entry_type']                  = 'Тип';
+$_['entry_xml_currency']          = 'Валюта';
+$_['entry_xml_cron']              = 'Ссылка для крона';
+$_['entry_name']                  = 'Название блока';
+$_['entry_title']                 = 'Заголовок блока';
+$_['entry_type']                  = 'Тип блока';
 $_['entry_limit']                 = 'Лимит';
 $_['entry_width']                 = 'Ширина изображения';
 $_['entry_height']                = 'Высота изображения';
@@ -77,6 +77,7 @@ $_['entry_css']                   = 'Загружать CSS-стили из ка
 $_['entry_discount']              = 'Только акционные товары';
 $_['entry_brands']                = 'Товары только этих брендов';
 $_['entry_exclude_brands']        = 'Исключить товары этих брендов';
+$_['entry_block_status']          = 'Статус блока';
 
 // Error
 $_['error_permission']            = 'У вас нет прав для изменения модуля REES46!';
