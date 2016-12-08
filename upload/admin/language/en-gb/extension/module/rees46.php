@@ -13,7 +13,7 @@ $_['tab_help']                    = 'Help';
 
 // Button
 $_['button_export']               = 'Start Export';
-$_['button_check']                = 'Check Necessary Files';
+$_['button_check']                = 'Check Files';
 $_['button_generate']             = 'Start Generate';
 
 // Text
@@ -48,8 +48,8 @@ $_['text_autocomplete']           = 'Autocomplete';
 $_['text_subscribers']            = 'Newsletter Subscribers';
 $_['text_customers']              = 'All Customers';
 $_['text_info_1']                 = '<a href="https://rees46.com/customers/sign_up?locale=en" target="_blank">To start using this module, please register an account on rees46.com.</a>';
-$_['text_info_2']                 = 'Manual export is required once - during initial configuration. Exported orders are the orders for the last 6 months with the statuses of your choice. Please remember to save current settings before starting exporting.';
-$_['text_info_3']                 = 'Please remember to save current settings before starting exporting.';
+$_['text_info_2']                 = 'Manual export is required once - during initial configuration. Exported orders are the orders for the last 6 months with the statuses of your choice. Please remember to save current settings before starting the export.';
+$_['text_info_3']                 = 'Please save current settings before starting the export.';
 $_['text_info_4']                 = 'To enable Web Push Notifications, your website first needs to support HTTPS and have manifest.json and push_sw.js in the root directory of your online store project.';
 
 // Entry
@@ -62,8 +62,8 @@ $_['entry_status_created']        = 'Created Order Status';
 $_['entry_status_completed']      = 'Completed Order Status';
 $_['entry_status_cancelled']      = 'Cancelled Order Status';
 $_['entry_export_customers']      = 'Export Customers';
-$_['entry_export_type']           = 'Customers Type';
-$_['entry_webpush_files']         = 'Necessary Files';
+$_['entry_export_type']           = 'Audience Type';
+$_['entry_webpush_files']         = 'Check Necessary Files';
 $_['entry_xml_currency']          = 'Currency';
 $_['entry_xml_cron']              = 'Cron Task Link';
 $_['entry_name']                  = 'Block Name';
