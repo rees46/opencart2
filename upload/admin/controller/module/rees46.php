@@ -761,10 +761,10 @@ class ControllerModuleRees46 extends Controller {
 		$this->load->model('extension/event');
 
 		if (version_compare(VERSION, '2.2', '<')) {
-			$this->model_extension_event->addEvent('rees46', 'post.order.add', 'module/rees46/exportOrder');
+			//$this->model_extension_event->addEvent('rees46', 'post.order.add', 'module/rees46/exportOrder');
 			$this->model_extension_event->addEvent('rees46', 'pre.order.history.add', 'module/rees46/exportStatus');
 		} else {
-			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrder/after', 'module/rees46/exportOrder');
+			//$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrder/after', 'module/rees46/exportOrder');
 			$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrderHistory/before', 'module/rees46/exportStatus');
 		}
 	}
