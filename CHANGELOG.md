@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.2
+* Fix exportOrder
+
 ## 1.8.1
 * Update english documentation link
 
