@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.1
+* Fix exportOrder
+
 ## 2.1.0
 * New XML generator
 * Update translation
