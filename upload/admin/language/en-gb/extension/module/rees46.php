@@ -47,7 +47,7 @@ $_['text_template_special']       = 'Special';
 $_['text_autocomplete']           = 'Autocomplete';
 $_['text_subscribers']            = 'Newsletter Subscribers';
 $_['text_customers']              = 'All Customers';
-$_['text_info_1']                 = 'To start using this module, please register an account on <a href="https://rees46.com" target="_blank">rees46.com</a> and get API keys for this form.';
+$_['text_info_1']                 = 'To start using this module, please register an account on <a href="https://rees46.com/opencart" target="_blank">rees46.com</a> and get API keys for this form.';
 $_['text_info_2']                 = 'Manual export is required once - during initial configuration. Exported orders are the orders for the last 6 months with the statuses of your choice. Please remember to save current settings before starting the export.';
 $_['text_info_3']                 = 'Please save current settings before starting the export.';
 $_['text_info_4']                 = 'To enable Web Push Notifications, your website first needs to support HTTPS! Files manifest.json and push_sw.js will automatically be placed in the root directory of your online store. Click "Check Files".';
