@@ -57,7 +57,7 @@ $_['text_template_special']       = 'Special';
 $_['text_autocomplete']           = 'Autocomplete';
 $_['text_subscribers']            = 'Newsletter Subscribers';
 $_['text_customers']              = 'All Customers';
-$_['text_info_1']                 = 'To start using this module, please register an account on <a href="https://rees46.com" target="_blank">rees46.com</a> and get API keys for this form.';
+$_['text_info_1']                 = 'To start using this module, please register an account on <a href="https://rees46.com/opencart" target="_blank">rees46.com</a> and get API keys for this form.';
 $_['text_info_2']                 = 'Export only once on time initial install module. Will be exported orders over the past six months with selected statuses of above. Please save settings before export!';
 $_['text_info_3']                 = 'Please save settings before export!';
 $_['text_info_4']                 = 'Generate XML feed, then specify url to it in account rees46. Please save settings before export!';
