@@ -8,5 +8,5 @@ English documentation: [http://docs.rees46.com/display/en/OpenCart+2+Module](htt
 
 ## Compatibility
 
-* OpenCart 2.3.x (for OpenCart 2.1.x and OpenCart 2.2.x use this addon https://github.com/rees46/opencart2/tree/master)
+* OpenCart 2.1.x and 2.2.x (for OpenCart 2.3.x use this addon https://github.com/rees46/opencart2/)
 * Addon Simple Checkout
