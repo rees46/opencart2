@@ -1,42 +1,27 @@
 <?php
-class ControllerToolRees46 extends Controller {
+class ControllerToolRees46Cron extends Controller {
+	private $prev = 0;
+
 	public function index() {
 		if ($this->config->get('rees46_tracking_status')) {
-			if (isset($this->request->get['step'])) {
-				if ($this->request->get['step'] == 1) {
-					$this->generateCurrencies();
+			$this->recorder('', 'w+');
 
-					$this->response->redirect($this->url->link('tool/rees46', 'step=2', 'SSL'));
-				} elseif ($this->request->get['step'] == 2) {
-					$this->generateCategories();
+			$this->generateShop();
+			$this->generateCurrencies();
+			$this->generateCategories();
 
-					$this->response->redirect($this->url->link('tool/rees46', 'prev=0', 'SSL'));
-				}
-			} elseif (isset($this->request->get['prev'])) {
-				if ($this->request->get['prev'] != 'finish') {
-					$prev = $this->generateOffers($this->request->get['prev']);
-
-					$this->response->setOutput('<meta http-equiv="refresh" content="0;' . $this->url->link('tool/rees46', 'prev=' . $prev, 'SSL') . '">');
-				} elseif ($this->request->get['prev'] == 'finish') {
-					$xml  = '    </offers>' . "\n";
-					$xml .= '  </shop>' . "\n";
-					$xml .= '</yml_catalog>';
-
-					$this->recorder($xml, 'a');
-
-					$this->response->redirect($this->url->link('tool/rees46/file', '', 'SSL'));
-				}
-			} else {
-				if (is_file(DIR_DOWNLOAD . 'rees46_cron.xml')) {
-					$this->response->redirect($this->url->link('tool/rees46/cron', '', 'SSL'));
-				} else {
-					$this->recorder('', 'w+');
-
-					$this->generateShop();
-
-					$this->response->redirect($this->url->link('tool/rees46', 'step=1', 'SSL'));
-				}
+			while (isset($this->prev)) {
+				$this->generateOffers();
 			}
+
+			$xml  = '    </offers>' . "\n";
+			$xml .= '  </shop>' . "\n";
+			$xml .= '</yml_catalog>';
+
+			$this->recorder($xml, 'a');
+
+			$this->response->addHeader('Content-Type: application/xml');
+			$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46_cron.xml'));
 		} else {
 			$this->load->language('error/not_found');
 
@@ -95,16 +80,6 @@ class ControllerToolRees46 extends Controller {
 				$this->response->setOutput($this->load->view('default/template/error/not_found', $data));
 			}
 		}
-	}
-
-	public function file() {
-		$this->response->addHeader('Content-Type: application/xml');
-		$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46.xml'));
-	}
-
-	public function cron() {
-		$this->response->addHeader('Content-Type: application/xml');
-		$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46_cron.xml'));
 	}
 
 	protected function generateShop() {
@@ -168,19 +143,21 @@ class ControllerToolRees46 extends Controller {
 		}
 	}
 
-	protected function generateOffers($prev) {
+	protected function generateOffers() {
 		$this->load->model('module/rees46');
 		$this->load->model('tool/image');
 
-		if ($prev == 0) {
+		if ($this->prev == 0) {
 			$xml = '    <offers>' . "\n";
 		} else {
 			$xml = '';
 		}
 
-		$product = $this->model_module_rees46->getProduct($prev);
+		$product = $this->model_module_rees46->getProduct($this->prev);
 
-		if (isset($product['product_id'])) {
+		if (!empty($product)) {
+			$this->prev = $product['product_id'];
+
 			$xml .= '      <offer id="' . $product['product_id'] . '" available="' . ($product['quantity'] > 0 ? 'true' : 'false') . '">' . "\n";
 
 			if ($this->request->server['HTTPS']) {
@@ -219,15 +196,11 @@ class ControllerToolRees46 extends Controller {
 			$xml .= '        <model>' . $this->replacer($product['model']) . '</model>' . "\n";
 			$xml .= '        <description><![CDATA[' . strip_tags(htmlspecialchars_decode($product['description']), '<h3>, <ul>, <li>, <p>, <br>') . ']]></description>' . "\n";
 			$xml .= '      </offer>' . "\n";
-
-			$this->recorder($xml, 'a');
-
-			$prev = $product['product_id'];
 		} else {
-			$prev = 'finish';
+			unset($this->prev);
 		}
 
-		return $prev;
+		$this->recorder($xml, 'a');
 	}
 
 	protected function replacer($str) {
@@ -235,7 +208,7 @@ class ControllerToolRees46 extends Controller {
 	}
 
 	protected function recorder($xml, $mode) {
-		if (!$fp = fopen(DIR_DOWNLOAD . 'rees46.xml', $mode)) {
+		if (!$fp = fopen(DIR_DOWNLOAD . 'rees46_cron.xml', $mode)) {
 			if ($this->config->get('rees46_log')) {
 				$this->log->write('REES46 log: Could not open xml file [ERROR]');
 			}

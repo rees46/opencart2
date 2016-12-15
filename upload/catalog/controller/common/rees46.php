@@ -2,7 +2,7 @@
 class ControllerCommonRees46 extends Controller {
 	public function index() {
 		if ($this->config->get('rees46_tracking_status')) {
-			$data['shop_id'] = $this->config->get('rees46_shop_id');
+			$data['store_key'] = $this->config->get('rees46_store_key');
 
 			if (isset($this->request->get['route'])) {
 				$data['route'] = $this->request->get['route'];

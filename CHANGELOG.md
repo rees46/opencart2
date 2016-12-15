@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.0
+* Compatibility with OpenCart 2.0
+* New XML generator
+* Update translation
+
 ## 1.8.2
 * Fix exportOrder
 
@@ -28,11 +33,11 @@
 * Fixed module limit
 
 ## 1.6.1
-* More compatibility with opencart 2.2
+* More compatibility with OpenCart 2.2
 * Update README
 
 ## 1.6.0
-* Compatibility with opencart 2.2
+* Compatibility with OpenCart 2.2
 
 ## 1.5.0
 * Redone the order tracking

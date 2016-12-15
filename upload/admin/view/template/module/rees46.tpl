@@ -27,17 +27,17 @@
 			<div class="panel-body">
 				<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
-						<li><a href="#tab-xml" data-toggle="tab"><?php echo $tab_xml; ?></a></li>
+						<li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+						<li><a href="#tab-products" data-toggle="tab"><?php echo $tab_products; ?></a></li>
 						<li><a href="#tab-orders" data-toggle="tab"><?php echo $tab_orders; ?></a></li>
-						<li><a href="#tab-subscribers" data-toggle="tab"><?php echo $tab_subscribers; ?></a></li>
+						<li><a href="#tab-customers" data-toggle="tab"><?php echo $tab_customers; ?></a></li>
 						<li><a href="#tab-webpush" data-toggle="tab"><?php echo $tab_webpush; ?></a></li>
 						<li><a href="#tab-modules" data-toggle="tab"><?php echo $tab_modules; ?></a></li>
 						<li><a href="#tab-help" data-toggle="tab"><?php echo $tab_help; ?></a></li>
 					</ul>
 					<div class="tab-content">
-						<div class="tab-pane active" id="tab-settings">
-							<?php if ($rees46_shop_id == '' && $rees46_secret_key == '') { ?>
+						<div class="tab-pane active" id="tab-general">
+							<?php if ($rees46_store_key == '' || $rees46_secret_key == '') { ?>
 							<div class="form-group">
 								<div class="col-sm-12">
 									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_1; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
@@ -45,9 +45,9 @@
 							</div>
 							<?php } ?>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-shop_id"><?php echo $entry_shop_id; ?></label>
+								<label class="col-sm-2 control-label" for="input-store_key"><?php echo $entry_store_key; ?></label>
 								<div class="col-sm-10">
-									<input type="text" name="setting[rees46_shop_id]" value="<?php echo $rees46_shop_id; ?>" id="input-shop_id" class="form-control" />
+									<input type="text" name="setting[rees46_store_key]" value="<?php echo $rees46_store_key; ?>" id="input-store_key" class="form-control" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -85,21 +85,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="tab-xml">
-							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-xml_status"><?php echo $entry_xml_status; ?></label>
-								<div class="col-sm-10">
-									<select name="setting[rees46_xml_status]" id="input-xml_status" class="form-control">
-										<?php if ($rees46_xml_status) { ?>
-										<option value="0"><?php echo $text_disabled; ?></option>
-										<option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-										<?php } else { ?>
-										<option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-										<option value="1"><?php echo $text_enabled; ?></option>
-										<?php } ?>
-									</select>
-								</div>
-							</div>
+						<div class="tab-pane" id="tab-products">
+							<input type="hidden" name="setting[rees46_xml_exported]" value="<?php echo $rees46_xml_exported; ?>" />
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-xml_currency"><?php echo $entry_xml_currency; ?></label>
 								<div class="col-sm-10">
@@ -114,17 +101,10 @@
 									</select>
 								</div>
 							</div>
-							<!--div class="form-group">
-								<label class="col-sm-2 control-label"><?php echo $entry_xml_generate; ?></label>
-								<div class="col-sm-10">
-									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_4; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
-									<button type="button" onclick="startGenerate();" class="btn btn-success" id="button-start-generate"><?php echo $button_generate; ?></button>
-								</div>
-							</div-->
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-xml_url"><?php echo $entry_xml_url; ?></label>
+								<label class="col-sm-2 control-label" for="input-xml_cron"><?php echo $entry_xml_cron; ?></label>
 								<div class="col-sm-10">
-									<input type="text" value="<?php echo $xml_url; ?>" id="input-xml_url" class="form-control" readonly />
+									<input type="text" value="<?php echo $cron; ?>" id="input-xml_cron" class="form-control" readonly />
 								</div>
 							</div>
 						</div>
@@ -197,26 +177,26 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="tab-subscribers">
+						<div class="tab-pane" id="tab-customers">
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-subscribers"><?php echo $entry_export_type; ?></label>
+								<label class="col-sm-2 control-label" for="input-customers"><?php echo $entry_export_type; ?></label>
 								<div class="col-sm-10">
-									<select name="setting[rees46_subscribers]" id="input-subscribers" class="form-control">
-										<?php if ($rees46_subscribers) { ?>
-										<option value="0"><?php echo $text_subscribers; ?></option>
+									<select name="setting[rees46_customers]" id="input-customers" class="form-control">
+										<?php if ($rees46_customers) { ?>
 										<option value="1" selected="selected"><?php echo $text_customers; ?></option>
+										<option value="0"><?php echo $text_subscribers; ?></option>
 										<?php } else { ?>
-										<option value="0" selected="selected"><?php echo $text_subscribers; ?></option>
 										<option value="1"><?php echo $text_customers; ?></option>
+										<option value="0" selected="selected"><?php echo $text_subscribers; ?></option>
 										<?php } ?>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label"><?php echo $entry_export_subscribers; ?></label>
+								<label class="col-sm-2 control-label"><?php echo $entry_export_customers; ?></label>
 								<div class="col-sm-10">
 									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_3; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
-									<button type="button" onclick="startExport('subscribers');" class="btn btn-success" id="button-start-subscribers"><?php echo $button_export; ?></button>
+									<button type="button" onclick="startExport('customers');" class="btn btn-success" id="button-start-customers"><?php echo $button_export; ?></button>
 								</div>
 							</div>
 						</div>
@@ -224,6 +204,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label"><?php echo $entry_webpush_files; ?></label>
 								<div class="col-sm-10">
+									<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_info_4; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
 									<button type="button" onclick="startCheck();" class="btn btn-success" id="button-start-check"><?php echo $button_check; ?></button>
 								</div>
 							</div>
@@ -365,7 +346,7 @@
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label" for="input-status<?php echo $module['module_id']; ?>"><?php echo $entry_status; ?></label>
+												<label class="col-sm-2 control-label" for="input-status<?php echo $module['module_id']; ?>"><?php echo $entry_block_status; ?></label>
 												<div class="col-sm-10">
 													<select name="module[<?php echo $module['module_id']; ?>][status]" id="input-status<?php echo $module['module_id']; ?>" class="form-control">
 														<?php if ($module['setting']['status'] == 1) { ?>
@@ -538,7 +519,7 @@ function addModule() {
 	html += '		</div>';
 	html += '	</div>';
 	html += '	<div class="form-group">';
-	html += '		<label class="col-sm-2 control-label" for="input-status' + module_row + '"><?php echo $entry_status; ?></label>';
+	html += '		<label class="col-sm-2 control-label" for="input-status' + module_row + '"><?php echo $entry_block_status; ?></label>';
 	html += '		<div class="col-sm-10">';
 	html += '			<select name="module[' + module_row + '][status]" id="input-status' + module_row + '" class="form-control">';
 	html += '				<option value="0"><?php echo $text_disabled; ?></option>';
@@ -588,38 +569,6 @@ function addModule() {
 
 	$('.well').delegate('.fa-minus-circle', 'click', function() {
 		$(this).parent().remove();
-	});
-}
-
-function startGenerate(type = 'shop', next = 0) {
-	$.ajax({
-		url: 'index.php?route=module/rees46/generate' + type + '&token=' + getURLVar('token'),
-		type: 'post',
-		data: 'type=' + type + '&next=' + next,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-start-generate').button('loading');
-		},
-		success: function(json) {
-			$('.alert-danger, .alert-success').remove();
-
-			if (json['success']) {
-				$('#tab-xml').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-
-			if (json['type'] && json['next']) {
-				startGenerate(json['type'], json['next']);
-			} else {
-				$('#button-start-generate').button('reset');
-			}
-
-			if (json['error']) {
-				$('#tab-xml').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
 	});
 }
 
