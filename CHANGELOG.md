@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2
+* Fix extension link
+* Remove admin icon
+
 ## 2.1.1
 * Fix exportOrder
 

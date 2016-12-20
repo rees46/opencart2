@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']               = '<img src="view/image/rees46.png" width="20"> REES46'; 
+$_['heading_title']               = 'REES46'; 
 
 // Tab
 $_['tab_general']                 = 'General';

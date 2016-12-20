@@ -5,7 +5,7 @@ class ControllerExtensionModuleRees46 extends Controller {
 	public function index() {
 		$this->load->language('extension/module/rees46');
 
-		$this->document->setTitle(strip_tags($this->language->get('heading_title')));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 		$this->load->model('extension/module');
@@ -161,12 +161,12 @@ class ControllerExtensionModuleRees46 extends Controller {
 
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
-				'text' => strip_tags($this->language->get('heading_title')),
+				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('extension/module/rees46', 'token=' . $this->session->data['token'], true)
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
-				'text' => strip_tags($this->language->get('heading_title')),
+				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('extension/module/rees46', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
 			);
 		}
@@ -538,7 +538,6 @@ class ControllerExtensionModuleRees46 extends Controller {
 	public function install() {
 		$this->load->model('extension/event');
 
-		//$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrder/after', 'extension/module/rees46/exportOrder');
 		$this->model_extension_event->addEvent('rees46', 'catalog/model/checkout/order/addOrderHistory/before', 'extension/module/rees46/exportStatus');
 	}
 
