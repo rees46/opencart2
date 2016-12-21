@@ -169,13 +169,13 @@ class ControllerToolRees46 extends Controller {
 
 		$products = $this->model_extension_module_rees46->getProducts($start, $this->limit);
 
-		if (!empty($products)) {
-			if (count($products) == $this->limit) {
-				$start = $start + $this->limit;
-			} else {
-				$start = 'finish';
-			}
+		if (count($products) == $this->limit) {
+			$start = $start + $this->limit;
+		} else {
+			$start = 'finish';
+		}
 
+		if (!empty($products)) {
 			$xml = '';
 
 			foreach ($products as $product) {
