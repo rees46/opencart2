@@ -2,7 +2,7 @@
 <modification>
 	<code>rees46</code>
 	<name>REES46</name>
-	<version>1.9.1</version>
+	<version>1.9.2</version>
 	<author>ay@rees46.com</author>
 	<link>https://rees46.com</link>
 	<file path="admin/model/extension/module.php">

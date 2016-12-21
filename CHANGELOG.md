@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.2
+* Fix empty start value
+
 ## 1.9.1
 * Fix XML generator timeout
 
