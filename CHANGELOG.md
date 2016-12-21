@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.3
+* Fix XML generator timeout
+
 ## 2.1.2
 * Fix extension link
 * Remove admin icon
