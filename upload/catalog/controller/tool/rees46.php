@@ -1,5 +1,7 @@
 <?php
 class ControllerToolRees46 extends Controller {
+	private $limit = 500;
+
 	public function index() {
 		if ($this->config->get('rees46_tracking_status')) {
 			if (isset($this->request->get['step'])) {
@@ -10,14 +12,16 @@ class ControllerToolRees46 extends Controller {
 				} elseif ($this->request->get['step'] == 2) {
 					$this->generateCategories();
 
-					$this->response->redirect($this->url->link('tool/rees46', 'prev=0', 'SSL'));
-				}
-			} elseif (isset($this->request->get['prev'])) {
-				if ($this->request->get['prev'] != 'finish') {
-					$prev = $this->generateOffers($this->request->get['prev']);
+					$this->recorder('    <offers>' . "\n", 'a');
 
-					$this->response->setOutput('<meta http-equiv="refresh" content="0;' . $this->url->link('tool/rees46', 'prev=' . $prev, 'SSL') . '">');
-				} elseif ($this->request->get['prev'] == 'finish') {
+					$this->response->redirect($this->url->link('tool/rees46', 'start=0', 'SSL'));
+				}
+			} elseif (isset($this->request->get['start'])) {
+				if ($this->request->get['start'] != 'finish') {
+					$start = $this->generateOffers($this->request->get['start']);
+
+					$this->response->redirect($this->url->link('tool/rees46', 'start=' . $start, 'SSL'));
+				} elseif ($this->request->get['start'] == 'finish') {
 					$xml  = '    </offers>' . "\n";
 					$xml .= '  </shop>' . "\n";
 					$xml .= '</yml_catalog>';
@@ -168,66 +172,68 @@ class ControllerToolRees46 extends Controller {
 		}
 	}
 
-	protected function generateOffers($prev) {
+	protected function generateOffers($start) {
 		$this->load->model('module/rees46');
 		$this->load->model('tool/image');
 
-		if ($prev == 0) {
-			$xml = '    <offers>' . "\n";
-		} else {
+		$products = $this->model_module_rees46->getProducts($start, $this->limit);
+
+		if (!empty($products)) {
+			if (count($products) == $this->limit) {
+				$start = $start + $this->limit;
+			} else {
+				$start = 'finish';
+			}
+
 			$xml = '';
-		}
 
-		$product = $this->model_module_rees46->getProduct($prev);
+			foreach ($products as $product) {
+				if (isset($product['product_id'])) {
+					$xml .= '      <offer id="' . $product['product_id'] . '" available="' . ($product['quantity'] > 0 ? 'true' : 'false') . '">' . "\n";
 
-		if (isset($product['product_id'])) {
-			$xml .= '      <offer id="' . $product['product_id'] . '" available="' . ($product['quantity'] > 0 ? 'true' : 'false') . '">' . "\n";
+					if ($this->request->server['HTTPS']) {
+						$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
+					} else {
+						$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
+					}
 
-			if ($this->request->server['HTTPS']) {
-				$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
-			} else {
-				$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
-			}
+					if ($product['special'] && $product['price'] > $product['special']) {
+						$xml .= '        <price>' . number_format($this->currency->convert($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
+						$xml .= '        <oldprice>' . number_format($this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</oldprice>' . "\n";
+					} else {
+						$xml .= '        <price>' . number_format($this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
+					}
 
-			if ($product['special'] && $product['price'] > $product['special']) {
-				$xml .= '        <price>' . number_format($this->currency->convert($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
-				$xml .= '        <oldprice>' . number_format($this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</oldprice>' . "\n";
-			} else {
-				$xml .= '        <price>' . number_format($this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
-			}
+					$xml .= '        <currencyId>' . $this->config->get('rees46_xml_currency') . '</currencyId>' . "\n";
 
-			$xml .= '        <currencyId>' . $this->config->get('rees46_xml_currency') . '</currencyId>' . "\n";
+					$categories = $this->model_module_rees46->getProductCategories($product['product_id']);
 
-			$categories = $this->model_module_rees46->getProductCategories($product['product_id']);
+					if (!empty($categories)) {
+						foreach ($categories as $category) {
+							$xml .= '        <categoryId>' . $category . '</categoryId>' . "\n";
+						}
+					}
 
-			if (!empty($categories)) {
-				foreach ($categories as $category) {
-					$xml .= '        <categoryId>' . $category . '</categoryId>' . "\n";
+					if ($product['image']) {
+						$xml .= '        <picture>' . $this->model_tool_image->resize($product['image'], 600, 600) . '</picture>' . "\n";
+					}
+
+					$xml .= '        <name>' . $this->replacer($product['name']) . '</name>' . "\n";
+
+					if ($product['manufacturer']) {
+						$xml .= '        <vendor>' . $this->replacer($product['manufacturer']) . '</vendor>' . "\n";
+					}
+
+					$xml .= '        <model>' . $this->replacer($product['model']) . '</model>' . "\n";
+					$xml .= '        <description><![CDATA[' . strip_tags(htmlspecialchars_decode($product['description']), '<h3>, <ul>, <li>, <p>, <br>') . ']]></description>' . "\n";
+					$xml .= '      </offer>' . "\n";
 				}
 			}
 
-			if ($product['image']) {
-				$xml .= '        <picture>' . $this->model_tool_image->resize($product['image'], 600, 600) . '</picture>' . "\n";
-			}
-
-			$xml .= '        <name>' . $this->replacer($product['name']) . '</name>' . "\n";
-
-			if ($product['manufacturer']) {
-				$xml .= '        <vendor>' . $this->replacer($product['manufacturer']) . '</vendor>' . "\n";
-			}
-
-			$xml .= '        <model>' . $this->replacer($product['model']) . '</model>' . "\n";
-			$xml .= '        <description><![CDATA[' . strip_tags(htmlspecialchars_decode($product['description']), '<h3>, <ul>, <li>, <p>, <br>') . ']]></description>' . "\n";
-			$xml .= '      </offer>' . "\n";
-
 			$this->recorder($xml, 'a');
-
-			$prev = $product['product_id'];
-		} else {
-			$prev = 'finish';
 		}
 
-		return $prev;
+		return $start;
 	}
 
 	protected function replacer($str) {

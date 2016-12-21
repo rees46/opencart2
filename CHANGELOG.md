@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.1
+* Fix XML generator timeout
+
 ## 1.9.0
 * Compatibility with OpenCart 2.0
 * New XML generator
