@@ -20,7 +20,7 @@ class ControllerToolRees46Cron extends Controller {
 
 			$this->recorder($xml, 'a');
 
-			$this->response->addHeader('Content-Type: application/xml');
+			$this->response->addHeader('Content-Type: application/xml; charset=UTF-8');
 			$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46_cron.xml'));
 		} else {
 			$this->load->language('error/not_found');

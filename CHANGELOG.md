@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.3
+* Clean the output buffer before XML
+
 ## 1.9.2
 * Fix empty start value
 
