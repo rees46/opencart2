@@ -1,6 +1,7 @@
 <?php
 class ControllerToolRees46 extends Controller {
 	private $limit = 500;
+	private $site_url = '';
 
 	public function index() {
 		if ($this->config->get('rees46_tracking_status')) {
@@ -108,9 +109,9 @@ class ControllerToolRees46 extends Controller {
 
 	protected function generateShop() {
 		if ($this->request->server['HTTPS']) {
-			$url = HTTPS_SERVER;
+			$this->site_url = HTTPS_SERVER;
 		} else {
-			$url = HTTP_SERVER;
+			$this->site_url = HTTP_SERVER;
 		}
 
 		$xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
@@ -119,7 +120,7 @@ class ControllerToolRees46 extends Controller {
 		$xml .= '  <shop>' . "\n";
 		$xml .= '    <name>' . $this->config->get('config_name') . '</name>' . "\n";
 		$xml .= '    <company>' . $this->config->get('config_owner') . '</company>' . "\n";
-		$xml .= '    <url>' . $url . '</url>' . "\n";
+		$xml .= '    <url>' . $this->site_url . '</url>' . "\n";
 		$xml .= '    <platform>OpenCart</platform>' . "\n";
 		$xml .= '    <version>' . VERSION . '</version>' . "\n";
 
@@ -185,12 +186,7 @@ class ControllerToolRees46 extends Controller {
 			foreach ($products as $product) {
 				if (isset($product['product_id'])) {
 					$xml .= '      <offer id="' . $product['product_id'] . '" available="' . ($product['quantity'] > 0 ? 'true' : 'false') . '">' . "\n";
-
-					if ($this->request->server['HTTPS']) {
-						$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
-					} else {
-						$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
-					}
+					$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
 
 					if ($product['special'] && $product['price'] > $product['special']) {
 						$xml .= '        <price>' . number_format($this->currency->convert($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
@@ -210,7 +206,13 @@ class ControllerToolRees46 extends Controller {
 					}
 
 					if ($product['image']) {
-						$xml .= '        <picture>' . $this->model_tool_image->resize($product['image'], 600, 600) . '</picture>' . "\n";
+						$image = $this->model_tool_image->resize($product['image'], 600, 600);
+
+						if (!preg_match("/https*:\/\/(www\.)*".preg_quote(preg_replace("/https*:\/\/(www\.)*/", "", $this->site_url), "/")."/", $image)) {
+    						$image = $this->site_url . $image;
+						}
+
+						$xml .= '        <picture>' . $image . '</picture>' . "\n";
 					}
 
 					$xml .= '        <name>' . $this->replacer($product['name']) . '</name>' . "\n";

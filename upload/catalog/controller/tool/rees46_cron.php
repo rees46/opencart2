@@ -1,6 +1,7 @@
 <?php
 class ControllerToolRees46Cron extends Controller {
 	private $prev = 0;
+	private $site_url = '';
 
 	public function index() {
 		if ($this->config->get('rees46_tracking_status')) {
@@ -75,9 +76,9 @@ class ControllerToolRees46Cron extends Controller {
 
 	protected function generateShop() {
 		if ($this->request->server['HTTPS']) {
-			$url = HTTPS_SERVER;
+			$this->site_url = HTTPS_SERVER;
 		} else {
-			$url = HTTP_SERVER;
+			$this->site_url = HTTP_SERVER;
 		}
 
 		$xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
@@ -86,7 +87,7 @@ class ControllerToolRees46Cron extends Controller {
 		$xml .= '  <shop>' . "\n";
 		$xml .= '    <name>' . $this->config->get('config_name') . '</name>' . "\n";
 		$xml .= '    <company>' . $this->config->get('config_owner') . '</company>' . "\n";
-		$xml .= '    <url>' . $url . '</url>' . "\n";
+		$xml .= '    <url>' . $this->site_url . '</url>' . "\n";
 		$xml .= '    <platform>OpenCart</platform>' . "\n";
 		$xml .= '    <version>' . VERSION . '</version>' . "\n";
 
@@ -175,7 +176,13 @@ class ControllerToolRees46Cron extends Controller {
 			}
 
 			if ($product['image']) {
-				$xml .= '        <picture>' . $this->model_tool_image->resize($product['image'], 600, 600) . '</picture>' . "\n";
+				$image = $this->model_tool_image->resize($product['image'], 600, 600);
+
+				if (!preg_match("/https*:\/\/(www\.)*".preg_quote(preg_replace("/https*:\/\/(www\.)*/", "", $this->site_url), "/")."/", $image)) {
+					$image = $this->site_url . $image;
+				}
+
+				$xml .= '        <picture>' . $image . '</picture>' . "\n";
 			}
 
 			$xml .= '        <name>' . $this->replacer($product['name']) . '</name>' . "\n";

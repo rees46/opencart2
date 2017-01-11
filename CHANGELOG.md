@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.6
+* Fix empty host in image url
+
 ## 2.1.5
 * Clean the output buffer before XML
 
