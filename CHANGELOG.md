@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.0
+* Changed module name
+* Updated help block
+* Updated translations
+* Added REES46 dashboard link
+* Removed setting CSS
+* Added lead tracking
+* Added recommender Supply
+
 ## 2.1.6
 * Fix empty host in image url
 

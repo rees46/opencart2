@@ -1,9 +1,9 @@
-<!-- REES46 start -->
+<!-- BEGIN REES46 INIT -->
 <script type="text/javascript"><!--
 (function(r){window.r46=window.r46||function(){(r46.q=r46.q||[]).push(arguments)};var s=document.getElementsByTagName(r)[0],rs=document.createElement(r);rs.async=1;rs.src='//cdn.rees46.com/v3.js';s.parentNode.insertBefore(rs,s);})('script');
 r46('init', '<?php echo $store_key; ?>');
 <?php if (isset($customer_id)) { ?>
-r46('profile', 'set', {id: <?php echo $customer_id; ?>, email: '<?php echo $customer_email; ?>', birthday: '', gender: '' });
+r46('profile', 'set', {id: <?php echo $customer_id; ?>, email: '<?php echo $customer_email; ?>'});
 <?php } ?>
 <?php if (isset($guest_email)) { ?>
 r46('profile', 'set', {email: '<?php echo $guest_email; ?>'});
@@ -42,4 +42,4 @@ $(document).ajaxComplete(function(e, xhr, settings) {
 	}
 });
 --></script>
-<!-- REES46 end -->
+<!-- END REES46 INIT -->

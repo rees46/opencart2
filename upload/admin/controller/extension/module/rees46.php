@@ -14,6 +14,44 @@ class ControllerExtensionModuleRees46 extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->model('localisation/currency');
 
+		if ($this->request->server['HTTPS']) {
+			$site_url = HTTPS_CATALOG;
+		} else {
+			$site_url = HTTP_CATALOG;
+		}
+
+        if (!$this->config->get('rees46_action_lead') || $this->config->get('rees46_action_lead') == null) {
+            $this->load->model('user/user');
+
+            $user_info = $this->model_user_user->getUser($this->user->getId());
+
+			$this->load->model('localisation/country');
+
+			$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+            $params = array(
+                'website' => $site_url,
+                'email' => $this->config->get('config_email'),
+                'first_name' => $user_info['firstname'],
+                'last_name' => $user_info['lastname'],
+                'phone' => $this->config->get('config_telephone'),
+                'city' => $this->config->get('config_address'),
+                'country' => $country['name'],
+            );
+
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_HEADER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+            curl_setopt($ch, CURLOPT_URL, 'https://rees46.com/trackcms/opencart?' . http_build_query($params));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_exec($ch);
+            curl_close($ch);
+
+            $rees46_action_lead = 1;
+        }
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!empty($this->request->post['module'])) {
 				foreach ($this->request->post['module'] as $key => $module) {
@@ -38,14 +76,7 @@ class ControllerExtensionModuleRees46 extends Controller {
 			if ((!$this->config->get('rees46_xml_exported') || $this->config->get('rees46_xml_exported') == null) && $this->request->post['setting']['rees46_store_key'] != '' && $this->request->post['setting']['rees46_secret_key'] != '') {
 				$params['store_key'] = $this->request->post['setting']['rees46_store_key'];
 				$params['store_secret'] = $this->request->post['setting']['rees46_secret_key'];
-
-				if ($this->request->server['HTTPS']) {
-					$params['yml_file_url'] = HTTPS_CATALOG . 'index.php?route=tool/rees46';
-				} else {
-					$params['yml_file_url'] = HTTP_CATALOG . 'index.php?route=tool/rees46';
-				}
-
-				$url = 'https://rees46.com/api/shop/set_yml';
+				$params['yml_file_url'] = $site_url . 'index.php?route=tool/rees46';
 
 				$ch = curl_init();
 
@@ -53,7 +84,7 @@ class ControllerExtensionModuleRees46 extends Controller {
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_URL, 'https://rees46.com/api/shop/set_yml');
 				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params, true));
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
@@ -63,8 +94,12 @@ class ControllerExtensionModuleRees46 extends Controller {
 				curl_close($ch);
 
 				if ($return['info']['http_code'] >= 200 && $return['info']['http_code'] < 300) {
-					$this->request->post['setting']['rees46_xml_exported'] = true;
+					$this->request->post['setting']['rees46_xml_exported'] = 1;
 				}
+			}
+
+			if (isset($rees46_action_lead)) {
+				$this->request->post['setting']['rees46_action_lead'] = $rees46_action_lead;
 			}
 
 			$this->model_setting_setting->editSetting('rees46', $this->request->post['setting']);
@@ -72,6 +107,8 @@ class ControllerExtensionModuleRees46 extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
+		} elseif (isset($rees46_action_lead)) {
+			$this->model_setting_setting->editSetting('rees46', array('rees46_action_lead' => 1));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -81,7 +118,6 @@ class ControllerExtensionModuleRees46 extends Controller {
 		$data['tab_customers'] = $this->language->get('tab_customers');
 		$data['tab_webpush'] = $this->language->get('tab_webpush');
 		$data['tab_modules'] = $this->language->get('tab_modules');
-		$data['tab_help'] = $this->language->get('tab_help');
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_add'] = $this->language->get('button_add');
@@ -92,8 +128,7 @@ class ControllerExtensionModuleRees46 extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_tab_module'] = $this->language->get('text_tab_module');
-		$data['text_documentation'] = $this->language->get('text_documentation');
-		$data['text_documentation_url'] = $this->language->get('text_documentation_url');
+		$data['text_help'] = $this->language->get('text_help');
 		$data['text_type_interesting'] = $this->language->get('text_type_interesting');
 		$data['text_type_also_bought'] = $this->language->get('text_type_also_bought');
 		$data['text_type_similar'] = $this->language->get('text_type_similar');
@@ -102,6 +137,7 @@ class ControllerExtensionModuleRees46 extends Controller {
 		$data['text_type_recently_viewed'] = $this->language->get('text_type_recently_viewed');
 		$data['text_type_buying_now'] = $this->language->get('text_type_buying_now');
 		$data['text_type_search'] = $this->language->get('text_type_search');
+		$data['text_type_supply'] = $this->language->get('text_type_supply');
 		$data['text_template_default'] = $this->language->get('text_template_default');
 		$data['text_template_basic'] = $this->language->get('text_template_basic');
 		$data['text_template_bestseller'] = $this->language->get('text_template_bestseller');
@@ -135,7 +171,6 @@ class ControllerExtensionModuleRees46 extends Controller {
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_template'] = $this->language->get('entry_template');
-		$data['entry_css'] = $this->language->get('entry_css');
 		$data['entry_discount'] = $this->language->get('entry_discount');
 		$data['entry_brands'] = $this->language->get('entry_brands');
 		$data['entry_exclude_brands'] = $this->language->get('entry_exclude_brands');
@@ -178,6 +213,22 @@ class ControllerExtensionModuleRees46 extends Controller {
 		}
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+
+		if (isset($this->request->post['setting']['rees46_action_lead'])) {
+			$data['rees46_action_lead'] = $this->request->post['setting']['rees46_action_lead'];
+		} elseif ($this->config->get('rees46_action_lead')) {
+			$data['rees46_action_lead'] = $this->config->get('rees46_action_lead');
+		} else {
+			$data['rees46_action_lead'] = null;
+		}
+
+		if (isset($this->request->post['setting']['rees46_xml_exported'])) {
+			$data['rees46_xml_exported'] = $this->request->post['setting']['rees46_xml_exported'];
+		} elseif ($this->config->get('rees46_xml_exported')) {
+			$data['rees46_xml_exported'] = $this->config->get('rees46_xml_exported');
+		} else {
+			$data['rees46_xml_exported'] = null;
+		}
 
 		if (isset($this->request->post['setting']['rees46_store_key'])) {
 			$data['rees46_store_key'] = $this->request->post['setting']['rees46_store_key'];
@@ -231,14 +282,6 @@ class ControllerExtensionModuleRees46 extends Controller {
 			$data['rees46_customers'] = $this->request->post['setting']['rees46_customers'];
 		} else {
 			$data['rees46_customers'] = $this->config->get('rees46_customers');
-		}
-
-		if (isset($this->request->post['setting']['rees46_xml_exported'])) {
-			$data['rees46_xml_exported'] = $this->request->post['setting']['rees46_xml_exported'];
-		} elseif ($this->config->get('rees46_xml_exported')) {
-			$data['rees46_xml_exported'] = $this->config->get('rees46_xml_exported');
-		} else {
-			$data['rees46_xml_exported'] = null;
 		}
 
 		if (isset($this->request->post['setting']['rees46_xml_status'])) {
@@ -317,12 +360,7 @@ class ControllerExtensionModuleRees46 extends Controller {
 			$data['module_row'] = count($data['modules']) + 1;
 		}
 
-		if ($this->request->server['HTTPS']) {
-			$data['cron'] = HTTPS_CATALOG . 'index.php?route=tool/rees46_cron';
-		} else {
-			$data['cron'] = HTTP_CATALOG . 'index.php?route=tool/rees46_cron';
-		}
-
+		$data['cron'] = $site_url . 'index.php?route=tool/rees46_cron';
 		$data['token'] = $this->session->data['token'];
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();

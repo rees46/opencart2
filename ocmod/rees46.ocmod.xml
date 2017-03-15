@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
 	<code>rees46</code>
-	<name>REES46</name>
-	<version>2.1.6</version>
-	<author>ay@rees46.com</author>
-	<link>https://rees46.com</link>
+	<name>REES46 eCommerce Marketing Suite</name>
+	<version>2.2.0</version>
+	<author>p0v1n0m</author>
+	<link>https://rees46.com/opencart</link>
 	<file path="admin/model/extension/module.php">
 		<operation>
 			<search><![CDATA[

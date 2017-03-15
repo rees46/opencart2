@@ -10,3 +10,4 @@ $_['text_type_see_also']        = 'Посмотрите также';
 $_['text_type_recently_viewed'] = 'Вы недавно смотрели';
 $_['text_type_buying_now']      = 'Прямо сейчас покупают';
 $_['text_type_search']          = 'Пользователи, искавшие этот товар, также купили';
+$_['text_type_supply']          = 'У вас скоро закончатся';
