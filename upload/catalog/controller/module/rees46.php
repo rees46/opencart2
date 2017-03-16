@@ -1,119 +1,139 @@
 <?php
 class ControllerModuleRees46 extends Controller {
 	public function index($setting) {
-		$data['module_id'] = $setting['module_id'];
-		$data['type'] = $setting['type'];
+		if ($this->config->get('rees46_tracking_status')) {
+			$data['module_id'] = $setting['module_id'];
+			$data['type'] = $setting['type'];
 
-		if ($setting['css']) {
-			$data['css'] = $setting['css'];
-		} else {
-			$data['css'] = false;
-		}
-
-		if (isset($this->request->get['product_id'])) {
-			$item = (int)$this->request->get['product_id'];
-		}
-
-		if (isset($this->request->get['path'])) {
-			$categories = explode('_', (string)$this->request->get['path']);
-
-			$category = (int)array_pop($categories);
-		}
-
-		if ($this->cart->hasProducts()) {
-			foreach ($this->cart->getProducts() as $product) {
-				$cart[] = $product['product_id'];
-			}
-		}
-
-		if (isset($this->request->get['search'])) {
-			$search_query = $this->request->get['search'];;
-		}
-
-		$params = array();
-
-		if ($setting['limit'] > 0) {
-			$params['limit'] = (int)$setting['limit'];
-		} else {
-			$params['limit'] = 6;
-		}
-
-		$params['discount'] = (int)$setting['discount'];
-
-		if (!empty($setting['manufacturers']) || !empty($setting['manufacturers_exclude'])) {
-			$this->load->model('catalog/manufacturer');
-		}
-
-		if (!empty($setting['manufacturers'])) {
-			$params['brands'] = array();
-
-			foreach ($setting['manufacturers'] as $manufacturer) {
-				$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer);
-
-				$params['brands'][] = $manufacturer_info['name'];
-			}
-		}
-
-		if (!empty($setting['manufacturers_exclude'])) {
-			$params['exclude_brands'] = array();
-
-			foreach ($setting['manufacturers_exclude'] as $manufacturer) {
-				$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer);
-
-				$params['exclude_brands'][] = $manufacturer_info['name'];
-			}
-		}
-
-		if ($data['type'] == 'interesting') {
-			if (isset($item)) {
-				$params['item'] = $item;
+			if ($setting['template'] == 'rees46_basic') {
+				$data['css'] = true;
+			} else {
+				$data['css'] = false;
 			}
 
-			$data['params'] = json_encode($params, true);
-		} elseif ($data['type'] == 'also_bought') {
-			if (isset($item)) {
-				$params['item'] = $item;
-
-				$data['params'] = json_encode($params, true);
+			if (isset($this->request->get['product_id'])) {
+				$item = (int)$this->request->get['product_id'];
 			}
-		} elseif ($data['type'] == 'similar') {
-			if (isset($item) && isset($cart)) {
-				$params['item'] = $item;
-				$params['cart'] = $cart;
 
-				if (isset($categories)) {
-					$params['categories'] = $categories;
+			if (isset($this->request->get['path'])) {
+				$categories = explode('_', (string)$this->request->get['path']);
+
+				$category = (int)array_pop($categories);
+			}
+
+			if ($this->cart->hasProducts()) {
+				foreach ($this->cart->getProducts() as $product) {
+					$cart[] = $product['product_id'];
+				}
+			}
+
+			if (isset($this->request->get['search'])) {
+				$search_query = $this->request->get['search'];;
+			}
+
+			$params = array();
+
+			if ($setting['limit'] > 0) {
+				$params['limit'] = (int)$setting['limit'];
+			} else {
+				$params['limit'] = 4;
+			}
+
+			$params['discount'] = (int)$setting['discount'];
+
+			if (!empty($setting['manufacturers']) || !empty($setting['manufacturers_exclude'])) {
+				$this->load->model('catalog/manufacturer');
+			}
+
+			if (!empty($setting['manufacturers'])) {
+				$params['brands'] = array();
+
+				foreach ($setting['manufacturers'] as $manufacturer) {
+					$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer);
+
+					$params['brands'][] = $manufacturer_info['name'];
+				}
+			}
+
+			if (!empty($setting['manufacturers_exclude'])) {
+				$params['exclude_brands'] = array();
+
+				foreach ($setting['manufacturers_exclude'] as $manufacturer) {
+					$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer);
+
+					$params['exclude_brands'][] = $manufacturer_info['name'];
+				}
+			}
+
+			if ($data['type'] == 'interesting') {
+				if (isset($item)) {
+					$params['item'] = $item;
+				}
+
+				if (isset($cart)) {
+					$params['cart'] = $cart;
 				}
 
 				$data['params'] = json_encode($params, true);
-			}
-		} elseif ($data['type'] == 'popular') {
-			if (isset($category)) {
-				$params['category'] = $category;
-			}
+			} elseif ($data['type'] == 'also_bought') {
+				if (isset($item)) {
+					$params['item'] = $item;
 
-			$data['params'] = json_encode($params, true);
-		} elseif ($data['type'] == 'see_also') {
-			if (isset($cart)) {
-				$params['cart'] = $cart;
+					if (isset($cart)) {
+						$params['cart'] = $cart;
+					}
+
+					$data['params'] = json_encode($params, true);
+				}
+			} elseif ($data['type'] == 'similar') {
+				if (isset($item) && isset($cart)) {
+					$params['item'] = $item;
+					$params['cart'] = $cart;
+
+					$data['params'] = json_encode($params, true);
+				}
+			} elseif ($data['type'] == 'popular') {
+				if (isset($category)) {
+					$params['category'] = $category;
+				}
+
+				if (isset($cart)) {
+					$params['cart'] = $cart;
+				}
 
 				$data['params'] = json_encode($params, true);
-			}
-		} elseif ($data['type'] == 'recently_viewed') {
-			$data['params'] = json_encode($params, true);
-		} elseif ($data['type'] == 'buying_now') {
-			if (isset($item)) {
-				$params['item'] = $item;
-			}
+			} elseif ($data['type'] == 'see_also') {
+				if (isset($cart)) {
+					$params['cart'] = $cart;
 
-			if (isset($cart)) {
-				$params['cart'] = $cart;
-			}
+					$data['params'] = json_encode($params, true);
+				}
+			} elseif ($data['type'] == 'recently_viewed') {
+				$data['params'] = json_encode($params, true);
+			} elseif ($data['type'] == 'buying_now') {
+				if (isset($item)) {
+					$params['item'] = $item;
+				}
 
-			$data['params'] = json_encode($params, true);
-		} elseif ($data['type'] == 'search') {
-			if (isset($search_query)) {
-				$params['search_query'] = $search_query;
+				if (isset($cart)) {
+					$params['cart'] = $cart;
+				}
+
+				$data['params'] = json_encode($params, true);
+			} elseif ($data['type'] == 'search') {
+				if (isset($search_query)) {
+					$params['search_query'] = $search_query;
+
+					if (isset($cart)) {
+						$params['cart'] = $cart;
+					}
+
+					$data['params'] = json_encode($params, true);
+				}
+			} elseif ($data['type'] == 'supply') {
+				if (isset($item)) {
+					$params['item'] = $item;
+				}
 
 				if (isset($cart)) {
 					$params['cart'] = $cart;
@@ -121,17 +141,17 @@ class ControllerModuleRees46 extends Controller {
 
 				$data['params'] = json_encode($params, true);
 			}
-		}
 
-		if (isset($data['params'])) {
-			if (version_compare(VERSION, '2.2', '<')) {
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/rees46.tpl')) {
-					return $this->load->view($this->config->get('config_template') . '/template/module/rees46.tpl', $data);
+			if (isset($data['params'])) {
+				if (version_compare(VERSION, '2.2', '<')) {
+					if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/rees46.tpl')) {
+						return $this->load->view($this->config->get('config_template') . '/template/module/rees46.tpl', $data);
+					} else {
+						return $this->load->view('default/template/module/rees46.tpl', $data);
+					}
 				} else {
-					return $this->load->view('default/template/module/rees46.tpl', $data);
+					return $this->load->view('module/rees46', $data);
 				}
-			} else {
-				return $this->load->view('module/rees46', $data);
 			}
 		}
 	}

@@ -26,6 +26,9 @@
 			</div>
 			<div class="panel-body">
 				<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+					<input type="hidden" name="setting[rees46_action_lead]" value="<?php echo $rees46_action_lead; ?>" />
+					<input type="hidden" name="setting[rees46_xml_exported]" value="<?php echo $rees46_xml_exported; ?>" />
+					<div class="alert alert-info"><?php echo $text_help; ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
 						<li><a href="#tab-products" data-toggle="tab"><?php echo $tab_products; ?></a></li>
@@ -33,7 +36,6 @@
 						<li><a href="#tab-customers" data-toggle="tab"><?php echo $tab_customers; ?></a></li>
 						<li><a href="#tab-webpush" data-toggle="tab"><?php echo $tab_webpush; ?></a></li>
 						<li><a href="#tab-modules" data-toggle="tab"><?php echo $tab_modules; ?></a></li>
-						<li><a href="#tab-help" data-toggle="tab"><?php echo $tab_help; ?></a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
@@ -86,7 +88,6 @@
 							</div>
 						</div>
 						<div class="tab-pane" id="tab-products">
-							<input type="hidden" name="setting[rees46_xml_exported]" value="<?php echo $rees46_xml_exported; ?>" />
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-xml_currency"><?php echo $entry_xml_currency; ?></label>
 								<div class="col-sm-10">
@@ -242,6 +243,7 @@
 														<option value="recently_viewed" <?php if ($module['setting']['type'] == 'recently_viewed') { ?>selected="selected"<?php } ?>><?php echo $text_type_recently_viewed; ?></option>
 														<option value="buying_now" <?php if ($module['setting']['type'] == 'buying_now') { ?>selected="selected"<?php } ?>><?php echo $text_type_buying_now; ?></option>
 														<option value="search" <?php if ($module['setting']['type'] == 'search') { ?>selected="selected"<?php } ?>><?php echo $text_type_search; ?></option>
+														<option value="supply" <?php if ($module['setting']['type'] == 'supply') { ?>selected="selected"<?php } ?>><?php echo $text_type_supply; ?></option>
 													</select>
 												</div>
 											</div>
@@ -284,20 +286,6 @@
 														<option value="latest" <?php if ($module['setting']['template'] == 'latest') { ?>selected="selected"<?php } ?>><?php echo $text_template_latest; ?></option>
 														<option value="special" <?php if ($module['setting']['template'] == 'special') { ?>selected="selected"<?php } ?>><?php echo $text_template_special; ?></option>
 														<option value="rees46_basic" <?php if ($module['setting']['template'] == 'rees46_basic') { ?>selected="selected"<?php } ?>><?php echo $text_template_basic; ?></option>
-													</select>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-sm-2 control-label" for="input-css<?php echo $module['module_id']; ?>"><?php echo $entry_css; ?></label>
-												<div class="col-sm-10">
-													<select name="module[<?php echo $module['module_id']; ?>][css]" id="input-css<?php echo $module['module_id']; ?>" class="form-control">
-														<?php if ($module['setting']['css'] == 1) { ?>
-														<option value="0"><?php echo $text_disabled; ?></option>
-														<option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-														<?php } else { ?>
-														<option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-														<option value="1"><?php echo $text_enabled; ?></option>
-														<?php } ?>
 													</select>
 												</div>
 											</div>
@@ -363,12 +351,6 @@
 										<?php } ?>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="tab-pane" id="tab-help">
-							<div class="form-group">
-								<label class="col-sm-2 control-label"><?php echo $text_documentation; ?></label>
-								<div class="col-sm-10"><a href="<?php echo $text_documentation_url; ?>" target="_blank" class="btn"><?php echo $text_documentation_url; ?></a></div>
 							</div>
 						</div>
 					</div>
@@ -441,6 +423,7 @@ function addModule() {
 	html += '				<option value="recently_viewed"><?php echo $text_type_recently_viewed; ?></option>';
 	html += '				<option value="buying_now"><?php echo $text_type_buying_now; ?></option>';
 	html += '				<option value="search"><?php echo $text_type_search; ?></option>';
+	html += '				<option value="supply"><?php echo $text_type_supply; ?></option>';
 	html += '			</select>';
 	html += '		</div>';
 	html += '	</div>';
@@ -483,15 +466,6 @@ function addModule() {
 	html += '				<option value="latest"><?php echo $text_template_latest; ?></option>';
 	html += '				<option value="special"><?php echo $text_template_special; ?></option>';
 	html += '				<option value="rees46_basic"><?php echo $text_template_basic; ?></option>';
-	html += '			</select>';
-	html += '		</div>';
-	html += '	</div>';
-	html += '	<div class="form-group">';
-	html += '		<label class="col-sm-2 control-label" for="input-css' + module_row + '"><?php echo $entry_css; ?></label>';
-	html += '		<div class="col-sm-10">';
-	html += '			<select name="module[' + module_row + '][css]" id="input-css' + module_row + '" class="form-control">';
-	html += '				<option value="0"><?php echo $text_disabled; ?></option>';
-	html += '				<option value="1"><?php echo $text_enabled; ?></option>';
 	html += '			</select>';
 	html += '		</div>';
 	html += '	</div>';

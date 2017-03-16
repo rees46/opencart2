@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']               = 'REES46'; 
+$_['heading_title']               = 'REES46 eCommerce Marketing Suite'; 
 
 // Tab
 $_['tab_general']                 = 'General';
@@ -9,7 +9,6 @@ $_['tab_orders']                  = 'Orders';
 $_['tab_customers']               = 'Customers';
 $_['tab_webpush']                 = 'Web Push';
 $_['tab_modules']                 = 'Recommendations';
-$_['tab_help']                    = 'Help';
 
 // Button
 $_['button_export']               = 'Start Export';
@@ -17,7 +16,7 @@ $_['button_check']                = 'Check Files';
 $_['button_generate']             = 'Start Generate';
 
 // Text
-$_['text_module']                 = 'Modules';
+$_['text_extension']              = 'Extensions';
 $_['text_success']                = 'Success: You have modified REES46 module!';
 $_['text_processing_orders']      = 'Processing: You have exported <b>%s</b> of <b>%s</b> selected orders into REES46!';
 $_['text_success_orders']         = 'Success: You have exported all <b>%s</b> selected orders into REES46!';
@@ -28,16 +27,16 @@ $_['text_success_check']          = 'Success: File <b>%s</b> loaded!';
 $_['text_error_check']            = 'Error: You need to load file <b>%s</b>!';
 $_['text_edit']                   = 'Edit REES46 Module';
 $_['text_tab_module']             = 'Module';
-$_['text_documentation']          = 'Documentation';
-$_['text_documentation_url']      = 'http://docs.rees46.com/display/en/OpenCart+2+Module';
-$_['text_type_interesting']       = 'You may like it';
-$_['text_type_also_bought']       = 'Also bought with this product';
-$_['text_type_similar']           = 'Similar products';
-$_['text_type_popular']           = 'Popular products';
-$_['text_type_see_also']          = 'See also';
-$_['text_type_recently_viewed']   = 'Recently viewed';
-$_['text_type_buying_now']        = 'Right now bought';
-$_['text_type_search']            = 'Customers who looked for this product also bought';
+$_['text_help']                   = 'Go to your REES46 store dashboard to get the access to:<br>- Triggered emails<br>- Email marketing tool<br>- Personalized search<br>- Web push triggered notifications<br>- Instant web push notifications<br>- Audience segmentation<br>- Abandoned cart remarketing tool<br><br><button type="button" onclick="window.open(\'https://rees46.com/customers/sign_in\', \'_blank\'); return false;" class="btn btn-success">REES46 dashboard</button><br><br>Documentation: <a href="http://docs.rees46.com/display/en/OpenCart+2+Module" target="_blank">http://docs.rees46.com/display/en/OpenCart+2+Module</a>';
+$_['text_type_interesting']       = 'You May Also Like';
+$_['text_type_also_bought']       = 'Frequently Bought Together';
+$_['text_type_similar']           = 'Similar Products';
+$_['text_type_popular']           = 'Popular Products';
+$_['text_type_see_also']          = 'Recommended For You';
+$_['text_type_recently_viewed']   = 'You Recently Viewed';
+$_['text_type_buying_now']        = 'Trending Products';
+$_['text_type_search']            = 'Customers Who Looked For This Item Also Bought';
+$_['text_type_supply']            = 'Regular Purchase';
 $_['text_template_default']       = 'Default';
 $_['text_template_basic']         = 'Basic REES46';
 $_['text_template_bestseller']    = 'Bestseller';
@@ -64,17 +63,16 @@ $_['entry_status_cancelled']      = 'Cancelled Order Status';
 $_['entry_export_customers']      = 'Export Customers';
 $_['entry_export_type']           = 'Audience Type';
 $_['entry_webpush_files']         = 'Necessary Working Files';
-$_['entry_xml_currency']          = 'Currency';
+$_['entry_xml_currency']          = 'Product Сurrency';
 $_['entry_xml_cron']              = 'Cron Task Link';
 $_['entry_name']                  = 'Block Name';
 $_['entry_title']                 = 'Block Title';
 $_['entry_type']                  = 'Block Type';
-$_['entry_limit']                 = 'Limit';
+$_['entry_limit']                 = 'Product Limit';
 $_['entry_width']                 = 'Image Width';
 $_['entry_height']                = 'Image Height';
 $_['entry_template']              = 'Recommendation Block Template';
-$_['entry_css']                   = 'Use Built-in CSS Styles';
-$_['entry_discount']              = 'Show Only Special Products';
+$_['entry_discount']              = 'Show Only Special Offers';
 $_['entry_brands']                = 'Show Only Products of Following Brands';
 $_['entry_exclude_brands']        = 'Exclude Products of Following Brands';
 $_['entry_block_status']          = 'Block Status';
