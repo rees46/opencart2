@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.1
+* Fixed block type (Supply)
+
 ## 2.2.0
 * Changed module name
 * Updated help block

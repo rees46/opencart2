@@ -423,7 +423,7 @@ function addModule() {
 	html += '				<option value="recently_viewed"><?php echo $text_type_recently_viewed; ?></option>';
 	html += '				<option value="buying_now"><?php echo $text_type_buying_now; ?></option>';
 	html += '				<option value="search"><?php echo $text_type_search; ?></option>';
-	html += '				<option value="search"><?php echo $text_type_supply; ?></option>';
+	html += '				<option value="supply"><?php echo $text_type_supply; ?></option>';
 	html += '			</select>';
 	html += '		</div>';
 	html += '	</div>';
