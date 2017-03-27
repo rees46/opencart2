@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+* Unavailable products exclude from the feed
+* Added module version and cms version to lead tracking
+
 ## 2.2.1
 * Fixed block type (Supply)
 

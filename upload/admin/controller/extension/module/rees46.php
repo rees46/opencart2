@@ -1,5 +1,6 @@
 <?php
 class ControllerExtensionModuleRees46 extends Controller {
+	private $module_version = '2.3.0';
 	private $error = array();
 
 	public function index() {
@@ -37,6 +38,8 @@ class ControllerExtensionModuleRees46 extends Controller {
                 'phone' => $this->config->get('config_telephone'),
                 'city' => $this->config->get('config_address'),
                 'country' => $country['name'],
+                'module_version' => $this->module_version,
+                'cms_version' => VERSION,
             );
 
             $ch = curl_init();

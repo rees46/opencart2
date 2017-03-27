@@ -184,8 +184,8 @@ class ControllerToolRees46 extends Controller {
 			$xml = '';
 
 			foreach ($products as $product) {
-				if (isset($product['product_id'])) {
-					$xml .= '      <offer id="' . $product['product_id'] . '" available="' . ($product['quantity'] > 0 ? 'true' : 'false') . '">' . "\n";
+				if (isset($product['product_id']) && $product['quantity'] > 0) {
+					$xml .= '      <offer id="' . $product['product_id'] . '" available="true">' . "\n";
 					$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
 
 					if ($product['special'] && $product['price'] > $product['special']) {
