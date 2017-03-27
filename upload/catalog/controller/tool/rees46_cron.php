@@ -156,10 +156,10 @@ class ControllerToolRees46Cron extends Controller {
 
 		$product = $this->model_module_rees46->getProduct($this->prev);
 
-		if (!empty($product)) {
+		if (!empty($product) && $product['quantity'] > 0) {
 			$this->prev = $product['product_id'];
 
-			$xml .= '      <offer id="' . $product['product_id'] . '" available="' . ($product['quantity'] > 0 ? 'true' : 'false') . '">' . "\n";
+			$xml .= '      <offer id="' . $product['product_id'] . '" available="true">' . "\n";
 
 			if ($this->request->server['HTTPS']) {
 				$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";

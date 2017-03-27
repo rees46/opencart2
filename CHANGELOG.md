@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.0
+* Unavailable products exclude from the feed
+* Added module version and cms version to lead tracking
+
 ## 1.10.0
 * Changed module name
 * Updated help block

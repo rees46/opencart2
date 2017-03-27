@@ -1,5 +1,6 @@
 <?php
 class ControllerModuleRees46 extends Controller {
+	private $module_version = '1.11.0';
 	private $error = array();
 
 	public function index() {
@@ -26,37 +27,39 @@ class ControllerModuleRees46 extends Controller {
 			$site_url = HTTP_CATALOG;
 		}
 
-        if (!$this->config->get('rees46_action_lead') || $this->config->get('rees46_action_lead') == null) {
-            $this->load->model('user/user');
+		if (!$this->config->get('rees46_action_lead') || $this->config->get('rees46_action_lead') == null) {
+			$this->load->model('user/user');
 
-            $user_info = $this->model_user_user->getUser($this->user->getId());
+			$user_info = $this->model_user_user->getUser($this->user->getId());
 
 			$this->load->model('localisation/country');
 
 			$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 
-            $params = array(
-                'website' => $site_url,
-                'email' => $this->config->get('config_email'),
-                'first_name' => $user_info['firstname'],
-                'last_name' => $user_info['lastname'],
-                'phone' => $this->config->get('config_telephone'),
-                'city' => $this->config->get('config_address'),
-                'country' => $country['name'],
-            );
+			$params = array(
+				'website' => $site_url,
+				'email' => $this->config->get('config_email'),
+				'first_name' => $user_info['firstname'],
+				'last_name' => $user_info['lastname'],
+				'phone' => $this->config->get('config_telephone'),
+				'city' => $this->config->get('config_address'),
+				'country' => $country['name'],
+				'module_version' => $this->module_version,
+				'cms_version' => VERSION,
+			);
 
-            $ch = curl_init();
+			$ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-            curl_setopt($ch, CURLOPT_URL, 'https://rees46.com/trackcms/opencart?' . http_build_query($params));
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_exec($ch);
-            curl_close($ch);
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+			curl_setopt($ch, CURLOPT_URL, 'https://rees46.com/trackcms/opencart?' . http_build_query($params));
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_exec($ch);
+			curl_close($ch);
 
-            $rees46_action_lead = 1;
-        }
+			$rees46_action_lead = 1;
+		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!empty($this->request->post['module'])) {
