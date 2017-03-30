@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.0
+* Added localisations: french, german, finnish, spanish, italian, portuguese, swedish.
+
 ## 2.3.0
 * Unavailable products exclude from the feed
 * Added module version and cms version to lead tracking

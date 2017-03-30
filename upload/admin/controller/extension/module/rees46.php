@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionModuleRees46 extends Controller {
-	private $module_version = '2.3.0';
+	private $version = '2.4.0';
 	private $error = array();
 
 	public function index() {
@@ -32,14 +32,14 @@ class ControllerExtensionModuleRees46 extends Controller {
 
             $params = array(
                 'website' => $site_url,
+                'cms_version' => VERSION,
+                'module_version' => $this->version,
                 'email' => $this->config->get('config_email'),
                 'first_name' => $user_info['firstname'],
                 'last_name' => $user_info['lastname'],
                 'phone' => $this->config->get('config_telephone'),
                 'city' => $this->config->get('config_address'),
                 'country' => $country['name'],
-                'module_version' => $this->module_version,
-                'cms_version' => VERSION,
             );
 
             $ch = curl_init();
