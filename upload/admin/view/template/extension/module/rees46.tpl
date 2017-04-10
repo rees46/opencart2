@@ -548,7 +548,7 @@ function addModule() {
 
 function startExport(type, next) {
 	if (!next) {
-		next = false;
+		next = 1;
 	}
 
 	$.ajax({
