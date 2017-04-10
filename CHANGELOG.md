@@ -1,7 +1,10 @@
 # Changelog
 
+## 1.13.0
+* Fixed admin script for IE
+
 ## 1.12.0
-* Added localisations: french, german, finnish, spanish, italian, portuguese, swedish.
+* Added localisations: french, german, finnish, spanish, italian, portuguese, swedish
 
 ## 1.11.0
 * Unavailable products exclude from the feed

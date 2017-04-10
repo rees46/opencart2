@@ -546,7 +546,11 @@ function addModule() {
 	});
 }
 
-function startExport(type, next = 1) {
+function startExport(type, next) {
+	if (!next) {
+		next = 1;
+	}
+
 	$.ajax({
 		url: 'index.php?route=module/rees46/export&token=' + getURLVar('token'),
 		type: 'post',
