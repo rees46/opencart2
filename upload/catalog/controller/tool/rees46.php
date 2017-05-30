@@ -103,18 +103,18 @@ class ControllerToolRees46 extends Controller {
 	}
 
 	public function file() {
-        if (ob_get_length()) {
-            ob_clean();
-        }
+		if (ob_get_length()) {
+			ob_clean();
+		}
 
 		$this->response->addHeader('Content-Type: application/xml; charset=UTF-8');
 		$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46.xml'));
 	}
 
 	public function cron() {
-        if (ob_get_length()) {
-            ob_clean();
-        }
+		if (ob_get_length()) {
+			ob_clean();
+		}
 
 		$this->response->addHeader('Content-Type: application/xml; charset=UTF-8');
 		$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46_cron.xml'));
@@ -222,7 +222,7 @@ class ControllerToolRees46 extends Controller {
 						$image = $this->model_tool_image->resize($product['image'], 600, 600);
 
 						if (!preg_match("/https*:\/\/(www\.)*".preg_quote(preg_replace("/https*:\/\/(www\.)*/", "", $this->site_url), "/")."/", $image)) {
-    						$image = $this->site_url . $image;
+							$image = $this->site_url . $image;
 						}
 
 						$xml .= '        <picture>' . $image . '</picture>' . "\n";
