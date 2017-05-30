@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.1
+* Fixed ob_clean notice
+* Added support email
+
 ## 1.13.0
 * Fixed admin script for IE
 
