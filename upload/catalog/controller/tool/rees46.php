@@ -94,14 +94,18 @@ class ControllerToolRees46 extends Controller {
 	}
 
 	public function file() {
-		ob_clean();
+		if (ob_get_length()) {
+			ob_clean();
+		}
 
 		$this->response->addHeader('Content-Type: application/xml; charset=UTF-8');
 		$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46.xml'));
 	}
 
 	public function cron() {
-		ob_clean();
+		if (ob_get_length()) {
+			ob_clean();
+		}
 
 		$this->response->addHeader('Content-Type: application/xml; charset=UTF-8');
 		$this->response->setOutput(file_get_contents(DIR_DOWNLOAD . 'rees46_cron.xml'));
