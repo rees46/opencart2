@@ -2,7 +2,7 @@
 
 ## Compatibility
 
-* OpenCart 2.3.x.x (for OpenCart 2.0.1.x - 2.2.x.x use this module https://github.com/rees46/opencart2/tree/master)
+* OpenCart 2.3.x.x (for OpenCart 2.0.1.0 - 2.2.0.0 use this module https://github.com/rees46/opencart2/tree/master)
 * Module Simple Checkout
 
 ## Documentation
