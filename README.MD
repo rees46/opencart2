@@ -1,4 +1,4 @@
-# REES46 Module for CMS OpenCart 2.3.x.x
+# REES46 Module for CMS OpenCart
 
 ## Compatibility
 
@@ -14,6 +14,10 @@ English documentation: [http://docs.rees46.com/display/en/OpenCart+2+Module](htt
 ## Support
 
 [support@rees46.com](mailto:support@rees46.com)
+
+## License
+
+MIT
 
 ![opencart](https://api.rees46.com/marker/opencart)
 ![opencart](https://googleads.g.doubleclick.net/pagead/viewthroughconversion/871826946/?value=0&guid=ON&script=0)
