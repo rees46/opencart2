@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.2
+* Added leftovers tag to XML
+
 ## 2.5.1
 * Fixed ob_clean notice
 * Added support email
