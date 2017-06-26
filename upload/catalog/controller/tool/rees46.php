@@ -198,8 +198,16 @@ class ControllerToolRees46 extends Controller {
 
 			foreach ($products as $product) {
 				if (isset($product['product_id']) && $product['quantity'] > 0) {
-					$xml .= '      <offer id="' . $product['product_id'] . '" available="true">' . "\n";
-						$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
+					if ($product['quantity'] > 10) {
+						$leftovers = 'lot';
+					} elseif ($product['quantity'] > 1) {
+						$leftovers = 'few';
+					} else {
+						$leftovers = 'one';
+					}
+
+					$xml .= '      <offer id="' . $product['product_id'] . '" available="true" leftovers="' . $leftovers . '">' . "\n";
+					$xml .= '        <url>' . $this->replacer($this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</url>' . "\n";
 
 					if ($product['special'] && $product['price'] > $product['special']) {
 						$xml .= '        <price>' . number_format($this->currency->convert($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'), $this->config->get('rees46_xml_currency')), 2, '.', '') . '</price>' . "\n";
