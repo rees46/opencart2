@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.13.3
+* XML is now always using the default language
+
 ## 1.13.2
 * Added leftovers tag to XML
 
