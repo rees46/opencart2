@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.13.4
+* Added possibility of a zero limit.
+
 ## 1.13.3
 * XML is now always using the default language
 
