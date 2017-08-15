@@ -1,6 +1,6 @@
 <?php
 class ControllerToolRees46 extends Controller {
-	private $limit = 500;
+	private $limit = 1000;
 	private $site_url = '';
 
 	public function index() {
