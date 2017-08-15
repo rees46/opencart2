@@ -103,6 +103,20 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-xml_tax"><?php echo $entry_xml_tax; ?></label>
+								<div class="col-sm-10">
+									<select name="setting[rees46_xml_tax]" id="input-xml_tax" class="form-control">
+										<?php if ($rees46_xml_tax) { ?>
+										<option value="0"><?php echo $text_disabled; ?></option>
+										<option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+										<?php } else { ?>
+										<option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+										<option value="1"><?php echo $text_enabled; ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label" for="input-xml_cron"><?php echo $entry_xml_cron; ?></label>
 								<div class="col-sm-10">
 									<input type="text" value="<?php echo $cron; ?>" id="input-xml_cron" class="form-control" readonly />

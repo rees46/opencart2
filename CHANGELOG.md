@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.4
+* Added setting of product tax
+* Fixed link tracking
+
 ## 2.5.3
 * XML is now always using the default language
 * Added possibility of a zero limit

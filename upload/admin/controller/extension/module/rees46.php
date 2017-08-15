@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionModuleRees46 extends Controller {
-	private $version = '2.5.3';
+	private $version = '2.5.4';
 	private $error = array();
 
 	public function index() {
@@ -47,7 +47,7 @@ class ControllerExtensionModuleRees46 extends Controller {
             curl_setopt($ch, CURLOPT_HEADER, false);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-            curl_setopt($ch, CURLOPT_URL, 'https://rees46.com/trackcms/opencart?' . http_build_query($params));
+            curl_setopt($ch, CURLOPT_URL, 'https://app.rees46.com/trackcms/opencart?' . http_build_query($params));
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_exec($ch);
             curl_close($ch);
@@ -166,6 +166,7 @@ class ControllerExtensionModuleRees46 extends Controller {
 		$data['entry_export_type'] = $this->language->get('entry_export_type');
 		$data['entry_webpush_files'] = $this->language->get('entry_webpush_files');
 		$data['entry_xml_currency'] = $this->language->get('entry_xml_currency');
+		$data['entry_xml_tax'] = $this->language->get('entry_xml_tax');
 		$data['entry_xml_cron'] = $this->language->get('entry_xml_cron');
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_title'] = $this->language->get('entry_title');
@@ -299,6 +300,12 @@ class ControllerExtensionModuleRees46 extends Controller {
 			$data['rees46_xml_currency'] = $this->config->get('rees46_xml_currency');
 		} else {
 			$data['rees46_xml_currency'] = $this->config->get('config_currency');
+		}
+
+		if (isset($this->request->post['setting']['rees46_xml_tax'])) {
+			$data['rees46_xml_tax'] = $this->request->post['setting']['rees46_xml_tax'];
+		} else {
+			$data['rees46_xml_tax'] = $this->config->get('rees46_xml_tax');
 		}
 
 		if (isset($this->request->get['module_id'])) {

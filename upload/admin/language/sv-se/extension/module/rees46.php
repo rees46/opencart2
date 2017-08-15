@@ -64,6 +64,7 @@ $_['entry_export_customers']      = 'Exportkunder';
 $_['entry_export_type']           = 'Publik typ';
 $_['entry_webpush_files']         = 'Nödvändiga arbetsfiler';
 $_['entry_xml_currency']          = 'Produkt valuta';
+$_['entry_xml_tax']               = 'Produktskatt ingår';
 $_['entry_xml_cron']              = 'Cron Task Link';
 $_['entry_name']                  = 'Block Namn';
 $_['entry_title']                 = 'Block Titel';
