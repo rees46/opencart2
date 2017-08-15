@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.5
+* Added setting of product tax
+* Fixed link tracking
+
 ## 1.13.4
 * Added possibility of a zero limit.
 

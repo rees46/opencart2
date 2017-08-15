@@ -64,6 +64,7 @@ $_['entry_export_customers']      = 'Kunden exportieren';
 $_['entry_export_type']           = 'Zielgruppe';
 $_['entry_webpush_files']         = 'Notwendige Arbeitsdateien';
 $_['entry_xml_currency']          = 'Produktwährung';
+$_['entry_xml_tax']               = 'Produktsteuer inbegriffen';
 $_['entry_xml_cron']              = 'Cron Task Link';
 $_['entry_name']                  = 'Blockname';
 $_['entry_title']                 = 'Titel blockieren';

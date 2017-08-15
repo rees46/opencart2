@@ -64,6 +64,7 @@ $_['entry_export_customers']      = 'Vientiasiakkaille';
 $_['entry_export_type']           = 'Yleisötyyppi';
 $_['entry_webpush_files']         = 'Välttämätön työtiedostojen';
 $_['entry_xml_currency']          = 'Tuotteen valuutta';
+$_['entry_xml_tax']               = 'Tuotteen vero sisältyy hintaan';
 $_['entry_xml_cron']              = 'Cron Tehtävä Link';
 $_['entry_name']                  = 'Block Name';
 $_['entry_title']                 = 'Block Otsikko';

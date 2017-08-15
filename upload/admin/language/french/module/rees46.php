@@ -64,6 +64,7 @@ $_['entry_export_customers']      = 'Exportation des clients';
 $_['entry_export_type']           = 'Type d\'audience';
 $_['entry_webpush_files']         = 'Fichiers de travail nécessaires';
 $_['entry_xml_currency']          = 'Devise du produit';
+$_['entry_xml_tax']               = 'Taxe sur les produits inclus';
 $_['entry_xml_cron']              = 'Lien de tâche Cron';
 $_['entry_name']                  = 'Nom du bloc';
 $_['entry_title']                 = 'Titre du bloc';

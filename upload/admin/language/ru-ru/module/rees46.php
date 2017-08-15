@@ -64,6 +64,7 @@ $_['entry_export_customers']      = 'Экспорт покупателей';
 $_['entry_export_type']           = 'Тип покупателей';
 $_['entry_webpush_files']         = 'Необходимые файлы';
 $_['entry_xml_currency']          = 'Валюта экспортируемых товаров';
+$_['entry_xml_tax']               = 'Налоги экспортируемых товаров';
 $_['entry_xml_cron']              = 'Ссылка для крона';
 $_['entry_name']                  = 'Название блока';
 $_['entry_title']                 = 'Заголовок блока';

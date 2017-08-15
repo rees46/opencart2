@@ -64,6 +64,7 @@ $_['entry_export_customers']      = 'Export clienti';
 $_['entry_export_type']           = 'Tipo pubblico';
 $_['entry_webpush_files']         = 'I file di lavoro necessari';
 $_['entry_xml_currency']          = 'Сurrency prodotto';
+$_['entry_xml_tax']               = 'Tassa sul prodotto inclusa';
 $_['entry_xml_cron']              = 'Cron Task Link';
 $_['entry_name']                  = 'Nome blocco';
 $_['entry_title']                 = 'Block Titolo';
