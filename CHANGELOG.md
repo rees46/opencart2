@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.13.6
+* Fixed API links
+
 ## 1.13.5
 * Added setting of product tax
 * Fixed link tracking

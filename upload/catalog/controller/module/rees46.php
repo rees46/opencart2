@@ -261,7 +261,7 @@ class ControllerModuleRees46 extends Controller {
 							'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id'] . '&recommended_by=' . $setting['type'])
 						);
 					} else {
-						$url = 'http://api.rees46.com/import/disable';
+						$url = 'https://api.rees46.com/import/disable';
 
 						$params['shop_id'] = $this->config->get('rees46_store_key');
 						$params['shop_secret'] = $this->config->get('rees46_secret_key');
@@ -321,7 +321,7 @@ class ControllerModuleRees46 extends Controller {
 				$params['shop_secret'] = $this->config->get('rees46_secret_key');
 				$params['orders'] = $data;
 
-				$url = 'http://api.rees46.com/import/sync_orders';
+				$url = 'https://api.rees46.com/import/sync_orders';
 
 				$return = $this->curl($url, json_encode($params, true));
 

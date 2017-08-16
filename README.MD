@@ -7,9 +7,9 @@
 
 ## Documentation
 
-English documentation: [http://docs.rees46.com/display/en/OpenCart+2+Module](http://docs.rees46.com/display/en/OpenCart+2+Module)
+English documentation: [https://docs.rees46.com/display/en/OpenCart+2+Module](https://docs.rees46.com/display/en/OpenCart+2+Module)
 
-Русская документация: [http://docs.rees46.com/display/R46D/OpenCart+2](http://docs.rees46.com/display/R46D/OpenCart+2)
+Русская документация: [https://docs.rees46.com/display/R46D/OpenCart+2](https://docs.rees46.com/display/R46D/OpenCart+2)
 
 ## Support
 

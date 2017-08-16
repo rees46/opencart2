@@ -1,6 +1,6 @@
 <?php
 class ControllerModuleRees46 extends Controller {
-	private $version = '1.13.5';
+	private $version = '1.13.6';
 	private $error = array();
 
 	public function index() {
@@ -93,7 +93,7 @@ class ControllerModuleRees46 extends Controller {
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-				curl_setopt($ch, CURLOPT_URL, 'https://rees46.com/api/shop/set_yml');
+				curl_setopt($ch, CURLOPT_URL, 'https://app.rees46.com/api/shop/set_yml');
 				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params, true));
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
@@ -507,11 +507,11 @@ class ControllerModuleRees46 extends Controller {
 				if ($this->request->post['type'] == 'orders') {
 					$params['orders'] = $data;
 
-					$url = 'http://api.rees46.com/import/orders';
+					$url = 'https://api.rees46.com/import/orders';
 				} elseif ($this->request->post['type'] == 'customers') {
 					$params['audience'] = $data;
 
-					$url = 'http://api.rees46.com/import/audience';
+					$url = 'https://api.rees46.com/import/audience';
 				}
 
 				$ch = curl_init();
