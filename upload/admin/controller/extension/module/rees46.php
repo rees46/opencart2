@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionModuleRees46 extends Controller {
-	private $version = '2.5.5';
+	private $version = '2.5.6';
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.6
+* Fixed init with empty store_key
+
 ## 2.5.5
 * Fixed API links
 

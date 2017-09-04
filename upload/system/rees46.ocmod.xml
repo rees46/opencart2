@@ -2,7 +2,7 @@
 <modification>
 	<code>rees46</code>
 	<name>REES46 eCommerce Marketing Suite</name>
-	<version>2.5.5</version>
+	<version>2.5.6</version>
 	<author>p0v1n0m</author>
 	<link>https://rees46.com/opencart</link>
 	<file path="admin/model/extension/module.php">
